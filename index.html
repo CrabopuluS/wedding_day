@@ -73,6 +73,8 @@
     section { padding: 48px 0; }
     .section-title { font-size: clamp(26px, 3.4vw, 36px); margin: 0 0 16px; }
     .section-note { color: var(--muted); margin: 0 0 24px; }
++39-12
+@@ -76,58 +76,60 @@
     .pass-warning {
       display: inline-block;
       padding: 2px 8px;
@@ -92,28 +94,17 @@
 
     .timeline { position: relative; padding-left: 20px; }
     .timeline::before { content:""; position:absolute; left:8px; top:0; bottom:0; width:2px; background:#e8ecf3; }
-    .t-item { position:relative; padding:14px 0 14px 12px; opacity:0; transform:translateY(20px); }
+    .t-item { position:relative; padding:14px 0 14px 12px; }
     .t-item::before { content:""; position:absolute; left:-2px; top:20px; width:10px; height:10px; background: var(--accent); border-radius:50%; box-shadow: 0 0 0 3px #f0edff; }
     .t-time { font-weight: 700; }
-    .timeline.animate .t-item { animation: fadeInUp .6s forwards; }
-    .timeline.animate .t-item:nth-child(1) { animation-delay: .1s; }
-    .timeline.animate .t-item:nth-child(2) { animation-delay: .3s; }
-    .timeline.animate .t-item:nth-child(3) { animation-delay: .5s; }
-    .timeline.animate .t-item:nth-child(4) { animation-delay: .7s; }
-    .timeline.animate .t-item::before { animation: pulse 2.4s infinite; }
-    @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-    @keyframes pulse {
-      0% { box-shadow:0 0 0 3px #f0edff, 0 0 0 0 rgba(124,92,255,.4); }
-      70% { box-shadow:0 0 0 3px #f0edff, 0 0 0 10px rgba(124,92,255,0); }
-      100% { box-shadow:0 0 0 3px #f0edff, 0 0 0 0 rgba(124,92,255,0); }
-    }
 
     /* Виш‑лист */
     .wish-grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
     .wish-card { grid-column: span 12; background:#fff; border:1px solid #edf0f6; border-radius: var(--r-md); padding:16px; display:flex; flex-wrap:wrap; gap:14px; align-items:center; box-shadow: var(--shadow-s); }
     @media (min-width: 760px) { .wish-card { grid-column: span 6; } }
     @media (min-width: 1024px) { .wish-card { grid-column: span 4; } }
-    .wish-thumb { width:64px; height:64px; border-radius: 12px; background: linear-gradient(120deg, rgba(124,92,255,.12), rgba(0,196,179,.12)); display:flex; align-items:center; justify-content:center; color: var(--accent); }
+    .wish-thumb { width:64px; height:64px; border-radius: 12px; background: linear-gradient(120deg, rgba(124,92,255,.12), rgba(0,196,179,.12)); display:flex; align-items:center; justify-content:center; color: var(--accent); overflow:hidden; }
+    .wish-thumb img { width:100%; height:100%; object-fit:cover; }
     .wish-icon { width:32px; height:32px; stroke:currentColor; stroke-width:2; fill:none; }
     .wish-meta { flex:1; min-width:0; }
     .wish-title { margin:0 0 4px; font-weight:800; font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
@@ -143,101 +134,16 @@
       @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity:1; transform:none; } }
     }
   </style>
-</head>
-<body>
-  <header>
-    <nav class="nav container" aria-label="Главная навигация">
-      <div class="brand">Наш день</div>
-      <a href="#details">Детали</a>
-      <a href="#schedule">Программа</a>
-      <a href="#wishlist">Виш‑лист</a>
-      <span class="spacer"></span>
-      <button class="btn ghost" id="mapBtn" type="button">Как добраться</button>
-      <button class="btn primary" id="icsBtn" type="button">Сохранить дату</button>
-    </nav>
-  </header>
-
-  <main>
-    <!-- HERO -->
-    <section class="hero">
-      <div class="container">
-        <span class="chip" id="dateChip">Суббота, 30 августа 2025</span>
-        <h1><span class="names" id="coupleNames">Имя & Имя</span></h1>
-        <p class="subtitle" id="heroSubtitle">Мы будем рады разделить с вами наш праздник любви. Здесь вся нужная информация: когда, где и что подарить 💫</p>
-        <div class="cta">
-          <button class="btn primary" id="heroIcs" type="button">Добавить в календарь</button>
-          <button class="btn ghost" id="heroMap" type="button">Открыть карту</button>
-        </div>
-      </div>
-    </section>
-
-    <!-- DETAILS -->
-    <section id="details">
-      <div class="container">
-        <h2 class="section-title">Детали события</h2>
-        <p class="section-note">Приходите чуть заранее. <span class="pass-warning">⚠️ Вход строго по пропускам, поэтому не опаздывать!!!</span></p>
-
-        <div class="grid">
-          <article class="card sm-4" aria-labelledby="whenTitle">
-            <h3 id="whenTitle">Когда</h3>
-            <p><strong id="dateText">30 августа 2025</strong> в <strong id="mainTime">15:00</strong></p>
-            <p>Сбор гостей — <strong id="startTime">13:50</strong>, торжественная часть — <strong id="ceremonyTime">14:30</strong></p>
-          </article>
-
-          <article class="card sm-4" aria-labelledby="whereTitle">
-            <h3 id="whereTitle">Где</h3>
-            <p id="venueName"><strong>LOFT Venue</strong></p>
-            <p id="venueAddr">г. _____, ул. ________, 10</p>
-            <div style="margin-top:10px; display:flex; gap:8px;">
-              <button class="btn ghost" id="mapBtn2" type="button">Открыть карту</button>
-            </div>
-          </article>
-
-          <article class="card sm-4" aria-labelledby="dressTitle">
-            <h3 id="dressTitle">Дресс‑код</h3>
-            <p>Дресс‑кода нет. Но если хотите красивые фоточки — вы знаете, что делать 😉</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- SCHEDULE -->
-    <section id="schedule">
-      <div class="container">
-        <h2 class="section-title">Программа</h2>
-        <div class="card">
-          <div class="timeline" id="timeline">
-            <div class="t-item"><div class="t-time">13:50</div><div>Сбор гостей</div></div>
-            <div class="t-item"><div class="t-time">14:30</div><div>Поднимаемся на башню</div></div>
-            <div class="t-item"><div class="t-time">15:00</div><div>Церемония</div></div>
-            <div class="t-item"><div class="t-time">16:00</div><div>Конец</div></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- WISHLIST -->
-    <section id="wishlist">
-      <div class="container">
-        <h2 class="section-title">Виш‑лист</h2>
-        <p class="section-note">Выберите подарок и «забронируйте» его — так мы избежим повторов. Для брони обязательно укажите ваше имя; снять бронь сможет только тот, кто её оформил. Бронь сохраняется в вашем браузере (для общего списка нужна интеграция с таблицей/сервером).</p>
-
-        <div class="filters">
-          <label><input type="checkbox" id="onlyFree"> Показать только свободные</label>
-        </div>
-
-        <div class="wish-grid" id="wishGrid" aria-live="polite"></div>
-      </div>
-    </section>
-  </main>
-
+  </head>
+  @@ -222,58 +224,82 @@
   <footer>
     <div class="container">
-      Если возникли вопросы — напишите нам: <a href="tel:+79032274106" aria-label="Телефон" style="color:inherit; font-weight:700; text-decoration:none;">+7 (903) 227‑41‑06</a>
-      <br/>С любовью, <span id="footerNames">Имя & Имя</span>
+      Если возникли вопросы — напишите нам: <a href="tel:+79032274106" aria-label="Телефон"
+        style="color:inherit; font-weight:700; text-decoration:none;">+7 (903) 227‑41‑06</a>
+      <br />С любовью, <span id="footerNames">Имя & Имя</span>
     </div>
   </footer>
-
+  
   <script>
     // === НАСТРОЙКИ ШАБЛОНА ===
     // Заполните данные ниже — они автоматически подставятся по всему сайту
@@ -262,7 +168,7 @@
         note: '',
         price: '',
         link: 'https://www.wildberries.ru/catalog/252986314/detail.aspx?size=394996892',
-        icon: '<svg viewBox="0 0 24 24" class="wish-icon"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 5V3h8v2"/><path d="M9 13h6"/><path d="M10 16h4"/></svg>'
+        image: 'аэрогриль.png'
       },
       {
         id: 'tableware',
@@ -270,7 +176,23 @@
         note: '',
         price: '',
         link: 'https://www.wildberries.ru/catalog/212966249/detail.aspx?size=340398755',
-        icon: '<svg viewBox="0 0 24 24" class="wish-icon"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="9"/><path d="M4 4v8"/><path d="M6 4v8"/><path d="M20 4v8"/></svg>'
+        image: 'столовый_сервиз.png'
+      },
+      {
+        id: 'bedding1',
+        title: 'Постельное белье 1',
+        note: '',
+        price: '',
+        link: 'https://www.wildberries.ru/catalog/275416950/detail.aspx?size=424599294',
+        image: 'постельное_бельё.png'
+      },
+      {
+        id: 'bedding2',
+        title: 'Постельное белье 2',
+        note: '',
+        price: '',
+        link: 'https://www.wildberries.ru/catalog/232577407/detail.aspx?size=366852213',
+        image: 'постельное_бельё_2.png'
       }
     ];
 
@@ -297,100 +219,62 @@
     function downloadICS() {
       // Формируем DTSTART/DTEND в локальном времени с TZID (без конвертации в UTC)
       const compact = (s) => s.replace(/[-:]/g, '');
-      const DTSTART = compact(WEDDING.dateISO) + 'T' + compact(WEDDING.timeStart);
-      const DTEND   = compact(WEDDING.dateISO) + 'T' + compact(WEDDING.timeEnd);
+      @@ -319, 54 + 345, 55 @@
+      const onlyFree = document.getElementById('onlyFree');
 
-      const lines = [
-        'BEGIN:VCALENDAR',
-        'VERSION:2.0',
-        'PRODID:-//Wedding Invite//Template//RU',
-        'CALSCALE:GREGORIAN',
-        'METHOD:PUBLISH',
-        'BEGIN:VEVENT',
-        `UID:${crypto.randomUUID()}@wedding`,
-        `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\..+/, 'Z')}`,
-        `DTSTART;TZID=${WEDDING.timezone}:${DTSTART}`,
-        `DTEND;TZID=${WEDDING.timezone}:${DTEND}`,
-        `SUMMARY:Свадьба — ${WEDDING.couple}`,
-        `LOCATION:${WEDDING.venueName}, ${WEDDING.address}`,
-        'DESCRIPTION:Будем рады видеть вас!',
-        'END:VEVENT',
-        'END:VCALENDAR'
-      ].join('\r\n');
-
-      const blob = new Blob([lines], { type: 'text/calendar;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
-      const a = Object.assign(document.createElement('a'), { href: url, download: 'wedding.ics' });
-      document.body.appendChild(a); a.click(); a.remove();
-      URL.revokeObjectURL(url);
-    }
-
-    // === КАРТА ===
-    function openMap() {
-      if (!WEDDING.mapsUrl || WEDDING.mapsUrl === '#') {
-        alert('Добавьте ссылку на карту в настройках WEDDING.mapsUrl');
-        return;
+      // Храним бронь как объект { r:1, name:"..." } в localStorage
+      const key = (id) => 'wish_' + id;
+      function getReservation(id) {
+        try { return JSON.parse(localStorage.getItem(key(id))) || null; } catch { return null; }
       }
-      window.open(WEDDING.mapsUrl, '_blank', 'noopener');
-    }
+      function isReserved(id) { const r = getReservation(id); return r && r.r === 1; }
+      function reservedName(id) { const r = getReservation(id); return r?.name || ''; }
+      function setReserved(id, name) { localStorage.setItem(key(id), JSON.stringify({ r: 1, name: name.trim() })); }
+      function clearReserved(id) { localStorage.removeItem(key(id)); }
+      function sameName(a, b) { return (a || '').trim().toLowerCase() === (b || '').trim().toLowerCase(); }
+      function escapeHtml(s) { return (s || '').replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', '\'': '&#39;' }[m])); }
 
-    // === ВИШ‑ЛИСТ ===
-    const grid = document.getElementById('wishGrid');
-    const onlyFree = document.getElementById('onlyFree');
+      function renderWishlist() {
+        grid.innerHTML = '';
+        const filtered = WISHLIST.filter(item => !(onlyFree.checked && isReserved(item.id)));
+        for (const item of filtered) {
+          const reserved = isReserved(item.id);
+          const owner = reservedName(item.id);
+          const nameLabel = reserved ? `Забронировано — ${escapeHtml(owner)}` : 'Свободно';
+          const title = escapeHtml(item.title);
+          const note = escapeHtml(item.note || '');
+          const price = escapeHtml(item.price || '');
+          const safeLink = /^https?:\/\//i.test(item.link || '') ? item.link : '#';
+          const thumb = item.image ? `<img src="${item.image}" alt="">` : (item.icon || '🎁');
+          const card = document.createElement('div');
+          card.className = 'wish-card';
+          card.innerHTML = `
+            <div class="wish-thumb" aria-hidden="true">${thumb}</div>
+            <div class="wish-meta">
+              <h4 class="wish-title" title="${title}">${title}</h4>
+              <p class="wish-note">${note}${price ? ' • ' + price : ''}</p>
+            </div>
+            <div class="wish-actions">
+              <a class="btn ghost" href="${safeLink}" target="_blank" rel="noopener noreferrer">Смотреть</a>
+              <span class="pill badge ${reserved ? 'reserved' : 'free'}">${nameLabel}</span>
+              <button class="btn primary" aria-pressed="${reserved}" data-id="${item.id}">${reserved ? 'Снять бронь' : 'Забронировать'}</button>
+            </div>`;
 
-    // Храним бронь как объект { r:1, name:"..." } в localStorage
-    const key = (id) => 'wish_' + id;
-    function getReservation(id) {
-      try { return JSON.parse(localStorage.getItem(key(id))) || null; } catch { return null; }
-    }
-    function isReserved(id) { const r = getReservation(id); return r && r.r === 1; }
-    function reservedName(id) { const r = getReservation(id); return r?.name || ''; }
-    function setReserved(id, name) { localStorage.setItem(key(id), JSON.stringify({ r: 1, name: name.trim() })); }
-    function clearReserved(id) { localStorage.removeItem(key(id)); }
-    function sameName(a,b){ return (a||'').trim().toLowerCase() === (b||'').trim().toLowerCase(); }
-    function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;','\'':'&#39;'}[m])); }
-
-    function renderWishlist() {
-      grid.innerHTML = '';
-      const filtered = WISHLIST.filter(item => !(onlyFree.checked && isReserved(item.id)));
-      for (const item of filtered) {
-        const reserved = isReserved(item.id);
-        const owner = reservedName(item.id);
-        const nameLabel = reserved ? `Забронировано — ${escapeHtml(owner)}` : 'Свободно';
-        const title = escapeHtml(item.title);
-        const note = escapeHtml(item.note || '');
-        const price = escapeHtml(item.price || '');
-        const safeLink = /^https?:\/\//i.test(item.link || '') ? item.link : '#';
-        const icon = item.icon || '🎁';
-        const card = document.createElement('div');
-        card.className = 'wish-card';
-        card.innerHTML = `
-          <div class="wish-thumb" aria-hidden="true">${icon}</div>
-          <div class="wish-meta">
-            <h4 class="wish-title" title="${title}">${title}</h4>
-            <p class="wish-note">${note}${price ? ' • ' + price : ''}</p>
-          </div>
-          <div class="wish-actions">
-            <a class="btn ghost" href="${safeLink}" target="_blank" rel="noopener noreferrer">Смотреть</a>
-            <span class="pill badge ${reserved ? 'reserved' : 'free'}">${nameLabel}</span>
-            <button class="btn primary" aria-pressed="${reserved}" data-id="${item.id}">${reserved ? 'Снять бронь' : 'Забронировать'}</button>
-          </div>`;
-
-        card.querySelector('button').addEventListener('click', (e) => {
-          const id = e.currentTarget.getAttribute('data-id');
-          if (!isReserved(id)) {
-            let name = prompt('Введите ваше имя, чтобы забронировать подарок:');
-            if (!name) return; // отмена
-            name = name.trim();
-            if (name.length < 2) { alert('Пожалуйста, укажите имя (не короче 2 символов).'); return; }
-            setReserved(id, name);
-            renderWishlist();
-          } else {
-            const current = reservedName(id);
-            const tryName = prompt('Чтобы снять бронь, введите имя, указанное при бронировании:');
-            if (tryName === null) return;
-            if (!sameName(current, tryName)) { alert('Имя не совпадает с тем, что было указано при брони.'); return; }
-            clearReserved(id);
+          card.querySelector('button').addEventListener('click', (e) => {
+            const id = e.currentTarget.getAttribute('data-id');
+            if (!isReserved(id)) {
+              let name = prompt('Введите ваше имя, чтобы забронировать подарок:');
+              if (!name) return; // отмена
+              name = name.trim();
+              if (name.length < 2) { alert('Пожалуйста, укажите имя (не короче 2 символов).'); return; }
+              setReserved(id, name);
+              renderWishlist();
+            } else {
+              const current = reservedName(id);
+              const tryName = prompt('Чтобы снять бронь, введите имя, указанное при бронировании:');
+              if (tryName === null) return;
+              if (!sameName(current, tryName)) { alert('Имя не совпадает с тем, что было указано при брони.'); return; }
+              clearReserved(id);
             renderWishlist();
           }
         });
