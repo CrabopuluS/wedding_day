@@ -73,6 +73,14 @@
     section { padding: 48px 0; }
     .section-title { font-size: clamp(26px, 3.4vw, 36px); margin: 0 0 16px; }
     .section-note { color: var(--muted); margin: 0 0 24px; }
+    .pass-warning {
+      display: inline-block;
+      padding: 2px 8px;
+      background: var(--danger);
+      color: #fff;
+      border-radius: var(--r-sm);
+      font-weight: 700;
+    }
 
     /* Инфо‑карточки */
     .grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
@@ -145,13 +153,13 @@
     <section id="details">
       <div class="container">
         <h2 class="section-title">Детали события</h2>
-        <p class="section-note">Приходите чуть заранее. <strong>⚠️ Вход строго по пропускам — пожалуйста, не опаздывайте!</strong></p>
+        <p class="section-note">Приходите чуть заранее. <span class="pass-warning">⚠️ Вход строго по пропускам, поэтому не опаздывать!!!</span></p>
 
         <div class="grid">
           <article class="card sm-4" aria-labelledby="whenTitle">
             <h3 id="whenTitle">Когда</h3>
-            <p><strong id="dateText">30 августа 2025</strong></p>
-            <p>Сбор гостей — <strong id="startTime">16:00</strong>, торжественная часть — <strong id="ceremonyTime">17:00</strong></p>
+            <p><strong id="dateText">30 августа 2025</strong> в <strong id="mainTime">15:00</strong></p>
+            <p>Сбор гостей — <strong id="startTime">13:50</strong>, торжественная часть — <strong id="ceremonyTime">14:30</strong></p>
           </article>
 
           <article class="card sm-4" aria-labelledby="whereTitle">
@@ -215,8 +223,9 @@
     const WEDDING = {
       couple: 'Руслан & Елизавета',         // Имена
       dateISO: '2025-08-30',       // Дата в формате YYYY-MM-DD
+      timeMain: '15:00',           // Основное время события
       timeStart: '13:50',          // Время сбора гостей (локальное)
-      timeCeremony: '15:00',
+      timeCeremony: '14:30',       // Торжественная часть
       timeEnd: '23:00',
       timezone: 'Europe/Moscow',   // TZID для .ics (замените при необходимости)
       venueName: 'Москоу‑Сити, башня ОКО — ресторан «Birds»',
@@ -247,6 +256,7 @@
       document.getElementById('footerNames').textContent = WEDDING.couple;
       document.getElementById('dateChip').textContent = prettyDate(dt);
       document.getElementById('dateText').textContent = dt.toLocaleDateString('ru-RU');
+      document.getElementById('mainTime').textContent = WEDDING.timeMain;
       document.getElementById('startTime').textContent = WEDDING.timeStart;
       document.getElementById('ceremonyTime').textContent = WEDDING.timeCeremony;
       document.getElementById('venueName').textContent = WEDDING.venueName;
