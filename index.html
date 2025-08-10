@@ -92,9 +92,21 @@
 
     .timeline { position: relative; padding-left: 20px; }
     .timeline::before { content:""; position:absolute; left:8px; top:0; bottom:0; width:2px; background:#e8ecf3; }
-    .t-item { position:relative; padding:14px 0 14px 12px; }
+    .t-item { position:relative; padding:14px 0 14px 12px; opacity:0; transform:translateY(20px); }
     .t-item::before { content:""; position:absolute; left:-2px; top:20px; width:10px; height:10px; background: var(--accent); border-radius:50%; box-shadow: 0 0 0 3px #f0edff; }
     .t-time { font-weight: 700; }
+    .timeline.animate .t-item { animation: fadeInUp .6s forwards; }
+    .timeline.animate .t-item:nth-child(1) { animation-delay: .1s; }
+    .timeline.animate .t-item:nth-child(2) { animation-delay: .3s; }
+    .timeline.animate .t-item:nth-child(3) { animation-delay: .5s; }
+    .timeline.animate .t-item:nth-child(4) { animation-delay: .7s; }
+    .timeline.animate .t-item::before { animation: pulse 2.4s infinite; }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes pulse {
+      0% { box-shadow:0 0 0 3px #f0edff, 0 0 0 0 rgba(124,92,255,.4); }
+      70% { box-shadow:0 0 0 3px #f0edff, 0 0 0 10px rgba(124,92,255,0); }
+      100% { box-shadow:0 0 0 3px #f0edff, 0 0 0 0 rgba(124,92,255,0); }
+    }
 
     /* Виш‑лист */
     .wish-grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
@@ -195,11 +207,10 @@
         <h2 class="section-title">Программа</h2>
         <div class="card">
           <div class="timeline" id="timeline">
-            <div class="t-item"><div class="t-time">16:00</div><div>Сбор гостей, welcome‑фото и напитки</div></div>
-            <div class="t-item"><div class="t-time">17:00</div><div>Церемония</div></div>
-            <div class="t-item"><div class="t-time">18:00</div><div>Ужин и поздравления</div></div>
-            <div class="t-item"><div class="t-time">21:00</div><div>Танцы до упаду</div></div>
-            <div class="t-item"><div class="t-time">23:00</div><div>Финальный аккорд</div></div>
+            <div class="t-item"><div class="t-time">13:50</div><div>Сбор гостей</div></div>
+            <div class="t-item"><div class="t-time">14:30</div><div>Поднимаемся на башню</div></div>
+            <div class="t-item"><div class="t-time">15:00</div><div>Церемония</div></div>
+            <div class="t-item"><div class="t-time">16:00</div><div>Конец</div></div>
           </div>
         </div>
       </div>
@@ -396,6 +407,17 @@
     // === ИНИЦИАЛИЗАЦИЯ ===
     hydrateBasics();
     renderWishlist();
+
+    const timelineEl = document.getElementById('timeline');
+    if (timelineEl) {
+      const observer = new IntersectionObserver((entries, obs) => {
+        if (entries[0].isIntersecting) {
+          timelineEl.classList.add('animate');
+          obs.disconnect();
+        }
+      }, { threshold: 0.2 });
+      observer.observe(timelineEl);
+    }
 
     document.getElementById('icsBtn').addEventListener('click', downloadICS);
     document.getElementById('heroIcs').addEventListener('click', downloadICS);
