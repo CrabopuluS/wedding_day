@@ -110,6 +110,15 @@
     .badge.reserved { background: #fef2f2; color: #991b1b; border: 1px dashed #fecaca; }
     .badge.free { background:#edfdf7; color:#065f46; border: 1px dashed #a7f3d0; }
 
+    /* Mobile tweaks */
+    @media (max-width: 480px) {
+      .container { padding: 16px; }
+      .nav { flex-wrap: wrap; justify-content: center; }
+      .cta { flex-direction: column; }
+      .cta .btn { width: 100%; }
+      .pass-warning { display: block; margin-top: 6px; }
+    }
+
     .filters { display:flex; gap:10px; align-items:center; margin-bottom: 12px; }
 
     /* Футер */
@@ -328,16 +337,20 @@
         const reserved = isReserved(item.id);
         const owner = reservedName(item.id);
         const nameLabel = reserved ? `Забронировано — ${escapeHtml(owner)}` : 'Свободно';
+        const title = escapeHtml(item.title);
+        const note = escapeHtml(item.note || '');
+        const price = escapeHtml(item.price || '');
+        const safeLink = /^https?:\/\//i.test(item.link || '') ? item.link : '#';
         const card = document.createElement('div');
         card.className = 'wish-card';
         card.innerHTML = `
           <div class="wish-thumb" aria-hidden="true">🎁</div>
           <div class="wish-meta">
-            <h4 class="wish-title" title="${item.title}">${item.title}</h4>
-            <p class="wish-note">${item.note || ''} ${item.price ? '• '+item.price : ''}</p>
+            <h4 class="wish-title" title="${title}">${title}</h4>
+            <p class="wish-note">${note}${price ? ' • ' + price : ''}</p>
           </div>
           <div class="wish-actions">
-            <a class="btn ghost" href="${item.link || '#'}" target="_blank" rel="noopener">Смотреть</a>
+            <a class="btn ghost" href="${safeLink}" target="_blank" rel="noopener noreferrer">Смотреть</a>
             <span class="pill badge ${reserved ? 'reserved' : 'free'}">${nameLabel}</span>
             <button class="btn primary" aria-pressed="${reserved}" data-id="${item.id}">${reserved ? 'Снять бронь' : 'Забронировать'}</button>
           </div>`;
