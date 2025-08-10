@@ -98,14 +98,15 @@
 
     /* Виш‑лист */
     .wish-grid { display:grid; grid-template-columns: repeat(12, 1fr); gap: 16px; }
-    .wish-card { grid-column: span 12; background:#fff; border:1px solid #edf0f6; border-radius: var(--r-md); padding:16px; display:flex; gap:14px; align-items:center; box-shadow: var(--shadow-s); }
+    .wish-card { grid-column: span 12; background:#fff; border:1px solid #edf0f6; border-radius: var(--r-md); padding:16px; display:flex; flex-wrap:wrap; gap:14px; align-items:center; box-shadow: var(--shadow-s); }
     @media (min-width: 760px) { .wish-card { grid-column: span 6; } }
     @media (min-width: 1024px) { .wish-card { grid-column: span 4; } }
-    .wish-thumb { width:64px; height:64px; border-radius: 12px; background: linear-gradient(120deg, rgba(124,92,255,.12), rgba(0,196,179,.12)); display:flex; align-items:center; justify-content:center; font-size:24px; }
+    .wish-thumb { width:64px; height:64px; border-radius: 12px; background: linear-gradient(120deg, rgba(124,92,255,.12), rgba(0,196,179,.12)); display:flex; align-items:center; justify-content:center; color: var(--accent); }
+    .wish-icon { width:32px; height:32px; stroke:currentColor; stroke-width:2; fill:none; }
     .wish-meta { flex:1; min-width:0; }
     .wish-title { margin:0 0 4px; font-weight:800; font-size:16px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .wish-note { margin:0; color: var(--muted); font-size:14px; }
-    .wish-actions { display:flex; gap:10px; align-items:center; }
+    .wish-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-left:auto; }
     .pill { padding:6px 10px; border-radius:999px; background:#f1f5f9; color:#334155; font-size:12px; font-weight:700; }
     .badge.reserved { background: #fef2f2; color: #991b1b; border: 1px dashed #fecaca; }
     .badge.free { background:#edfdf7; color:#065f46; border: 1px dashed #a7f3d0; }
@@ -244,14 +245,22 @@
 
     // Пример списка подарков — редактируйте/дополняйте
     const WISHLIST = [
-      { id: 'coffee',   title: 'Кофемашина',          note: 'De’Longhi Magnifica S', price: '~40 000 ₽', link: '#' },
-      { id: 'vacuum',   title: 'Робот‑пылесос',       note: 'с лидаром',             price: '~25 000 ₽', link: '#' },
-      { id: 'trip',     title: 'Подарочный сертификат на отдых', note: 'От 10 000 ₽', price: 'любой номинал', link: '#' },
-      { id: 'dishes',   title: 'Набор посуды',        note: 'стиль минимализм',      price: '~12 000 ₽', link: '#' },
-      { id: 'bedding',  title: 'Постельное бельё',    note: 'сатин, 200×220',        price: '~8 000 ₽',  link: '#' },
-      { id: 'mixer',    title: 'Планетарный миксер',  note: 'совместим с насадками', price: '~18 000 ₽', link: '#' },
-      { id: 'art',      title: 'Сертификат в галерею',note: 'на совместный выбор',   price: 'от 5 000 ₽', link: '#' },
-      { id: 'cash',     title: 'Пожелайте конверт 😊', note: 'любая сумма',           price: '',          link: '#' },
+      {
+        id: 'aerogrill',
+        title: 'Аэрогриль',
+        note: '',
+        price: '',
+        link: 'https://www.wildberries.ru/catalog/252986314/detail.aspx?size=394996892',
+        icon: '<svg viewBox="0 0 24 24" class="wish-icon"><rect x="4" y="5" width="16" height="14" rx="3"/><path d="M8 5V3h8v2"/><path d="M9 13h6"/><path d="M10 16h4"/></svg>'
+      },
+      {
+        id: 'tableware',
+        title: 'Столовый сервиз',
+        note: '',
+        price: '',
+        link: 'https://www.wildberries.ru/catalog/212966249/detail.aspx?size=340398755',
+        icon: '<svg viewBox="0 0 24 24" class="wish-icon"><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="9"/><path d="M4 4v8"/><path d="M6 4v8"/><path d="M20 4v8"/></svg>'
+      }
     ];
 
     // === УТИЛИТЫ ДАТ/ФОРМАТОВ ===
@@ -341,10 +350,11 @@
         const note = escapeHtml(item.note || '');
         const price = escapeHtml(item.price || '');
         const safeLink = /^https?:\/\//i.test(item.link || '') ? item.link : '#';
+        const icon = item.icon || '🎁';
         const card = document.createElement('div');
         card.className = 'wish-card';
         card.innerHTML = `
-          <div class="wish-thumb" aria-hidden="true">🎁</div>
+          <div class="wish-thumb" aria-hidden="true">${icon}</div>
           <div class="wish-meta">
             <h4 class="wish-title" title="${title}">${title}</h4>
             <p class="wish-note">${note}${price ? ' • ' + price : ''}</p>
