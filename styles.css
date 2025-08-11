@@ -3,6 +3,8 @@
   --bg-muted: #FFF8F0;
   --text: #8B6F5A;
   --text-2: #A68A75;
+  --text: #A68A75;
+  --text-2: #CBB39E;
   --wood: #D9A066;
   --wood-600: #A68A75;
   --sage: #E6C8A5;
@@ -10,6 +12,7 @@
   --border: #EBD9C3;
   --white: #FDFDFB;
   --shadow: rgba(139, 111, 90, 0.08);
+  --shadow: rgba(166, 138, 117, 0.08);
   --radius: 16px;
   --gap: 24px;
   --speed: 0.3s;
