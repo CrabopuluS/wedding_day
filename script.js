@@ -56,8 +56,11 @@
       }
       // === УТИЛИТЫ ДАТ/ФОРМАТОВ ===
       const dt = new Date(WEDDING.dateISO + 'T' + (WEDDING.timeStart || '12:00'));
-    const dateFormatter = new Intl.DateTimeFormat('ru-RU', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
-    const prettyDate = (d) => dateFormatter.format(d).replace(/^./, c => c.toUpperCase());
+    const prettyDate = (d) => new Intl.DateTimeFormat('ru-RU', {
+      day: 'numeric',
+      month: 'long',
+      year: 'numeric'
+    }).format(d);
 
     // Отрисовка основных данных
     function hydrateBasics() {
@@ -313,3 +316,8 @@ const navObserver=new IntersectionObserver(entries=>{
   });
 },{rootMargin:'-50% 0px -50% 0px'});
 sections.forEach(sec=>navObserver.observe(sec));
+
+const burger=document.getElementById('burger');
+const nav=document.querySelector('.nav');
+burger.addEventListener('click',()=>nav.classList.toggle('open'));
+navLinks.forEach(l=>l.addEventListener('click',()=>nav.classList.remove('open')));
