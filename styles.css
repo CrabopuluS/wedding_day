@@ -228,23 +228,25 @@ header.scrolled {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 4px;
-  width: 40px;
-  height: 40px;
+  gap: 6px;
+  width: 44px;
+  height: 44px;
   border: 0;
   background: transparent;
   cursor: pointer;
   padding: 8px;
+  position: relative;
+  z-index: 2;
 }
 .burger span {
   display: block;
-  height: 2px;
-  width: 24px;
-  background: var(--text);
+  height: 3px;
+  width: 28px;
+  background: var(--wood);
   transition:
     transform var(--speed) ease,
     opacity var(--speed) ease;
-  border-radius: 1px;
+  border-radius: 2px;
 }
 .nav.open .burger span:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
@@ -267,6 +269,25 @@ header.scrolled {
 @media (max-width: 767px) {
   header .nav__links .btn {
     display: none;
+  }
+}
+
+@media (min-width: 768px) {
+  .burger {
+    order: -1;
+    margin-left: 0;
+    margin-right: calc(var(--gap) / 2);
+  }
+  .nav__links {
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+  }
+  .nav.open .nav__links {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
   }
 }
 .spacer {
