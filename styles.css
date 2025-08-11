@@ -299,15 +299,19 @@ header.scrolled {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: clamp(60px, 10vw, 120px) 0;
+  min-height: 100vh;
+  padding: var(--gap) 0;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
   background: url("image/background.jpg") center/cover no-repeat;
-  filter: blur(8px);
+  filter: blur(3px);
   transform: scale(1.1);
   z-index: -2;
 }
@@ -317,9 +321,9 @@ header.scrolled {
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(250, 244, 239, 0.95) 0%,
-    rgba(250, 244, 239, 0.9) 35%,
-    rgba(250, 244, 239, 1) 100%
+    rgba(250, 244, 239, 0.6) 0%,
+    rgba(250, 244, 239, 0.4) 35%,
+    rgba(250, 244, 239, 0.8) 100%
   );
   z-index: -1;
 }
@@ -333,6 +337,16 @@ header.scrolled {
 }
 .hero > * {
   position: relative;
+}
+
+.hero-content {
+  background: rgba(250, 244, 239, 0.8);
+  padding: calc(var(--gap) * 1.5);
+  border-radius: var(--radius);
+  box-shadow: 0 6px 20px var(--shadow);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
 }
 section {
   padding: clamp(64px, 8vw, 96px) 0;
@@ -526,6 +540,11 @@ img {
   color: var(--white);
   font-family: "Playfair Display", serif;
   font-weight: 600;
+  position: absolute;
+  top: var(--gap);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 .cta {
   display: flex;
