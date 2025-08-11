@@ -7,6 +7,8 @@
   <meta name="description" content="Шаблон сайта‑приглашения на свадьбу: дата, место, программа и виш‑лист." />
   <meta property="og:title" content="Свадебное приглашение" />
   <meta property="og:description" content="Присоединяйтесь к нашему празднику! Здесь — дата, место, программа и виш‑лист." />
+  <meta property="og:image" content="image/og-image.jpg" />
+  <meta property="og:url" content="https://example.com/" />
   <meta name="theme-color" content="#ffffff" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,6 +60,7 @@
              <p id="venueAddr"></p>
              <div style="margin-top:10px; display:flex; gap:8px;">
                <button id="mapBtn2" class="btn ghost">Открыть карту</button>
+               <button id="copyAddr" class="btn secondary">Скопировать адрес</button>
              </div>
            </article>
  
@@ -101,6 +104,7 @@
          <p class="section-note">Если вы собираетесь сделать подарок, но не знаете что и как, то мы подобрали список
            возможных подарков, чтобы облегчить вам жизнь. Подарок можно забронировать, чтобы не было проблемы с тем, что
            кто-то решит подарить тоже самое.</p>
+         <div id="wishError" class="banner hidden">Сервер недоступен, статусы могут быть неточны</div>
          <div class="filters">
            <label><input type="checkbox" id="onlyFree" /> Только свободные</label>
          </div>

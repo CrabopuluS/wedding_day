@@ -88,7 +88,8 @@
       const compact = (s) => s.replace(/[-:]/g, '');
       const dtStart = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeMain || '12:00')}00`;
       const dtEnd = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeEnd || WEDDING.timeMain)}00`;
-      const ics = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nDTSTAMP:${dtStart}\r\nDTSTART;TZID=${WEDDING.timezone}:${dtStart}\r\nDTEND;TZID=${WEDDING.timezone}:${dtEnd}\r\nSUMMARY:${WEDDING.couple}\r\nLOCATION:${WEDDING.venueName}, ${WEDDING.address}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+      const dtStamp = compact(new Date().toISOString()).split('.')[0] + 'Z';
+      const ics = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nDTSTAMP:${dtStamp}\r\nDTSTART;TZID=${WEDDING.timezone}:${dtStart}\r\nDTEND;TZID=${WEDDING.timezone}:${dtEnd}\r\nSUMMARY:${WEDDING.couple}\r\nLOCATION:${WEDDING.venueName}, ${WEDDING.address}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
       const blob = new Blob([ics], { type: 'text/calendar' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
@@ -100,15 +101,32 @@
     }
 
     // === КАРТА ===
+    function mapUrl() {
+      const encoded = encodeURIComponent(WEDDING.address);
+      const ua = navigator.userAgent;
+      if (/iPad|iPhone|Mac/.test(ua)) return `http://maps.apple.com/?q=${encoded}`;
+      if (/Android/.test(ua)) return `https://maps.google.com/?q=${encoded}`;
+      return WEDDING.mapsUrl || `https://yandex.ru/maps/?text=${encoded}`;
+    }
+
     function openMap() {
-      if (WEDDING.mapsUrl) {
-        window.open(WEDDING.mapsUrl, '_blank', 'noopener');
+      window.open(mapUrl(), '_blank', 'noopener');
+    }
+
+    function copyAddress() {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(WEDDING.address).then(() => {
+          alert('Адрес скопирован');
+        });
       }
     }
 
       // === ВИШ-ЛИСТ ===
       const grid = document.getElementById('wishGrid');
       const onlyFree = document.getElementById('onlyFree');
+      const errorBanner = document.getElementById('wishError');
+
+      onlyFree.checked = localStorage.getItem('onlyFree') === '1';
 
       // Локально храним только токен отмены; активные брони берём с сервера
       function getToken(id){ return localStorage.getItem('wish_token_'+id) || ''; }
@@ -117,14 +135,20 @@
 
       let SERVER_MAP = {}; // item_id -> name (активные брони)
 
-      async function refreshFromServer() {
-        try {
-          const { ok, reservations } = await apiList();
-          if (ok) SERVER_MAP = reservations || {};
-        } catch (e) {
-          console.error('Не удалось получить список броней', e);
+        async function refreshFromServer() {
+          try {
+            const { ok, reservations } = await apiList();
+            if (ok) {
+              SERVER_MAP = reservations || {};
+              errorBanner.classList.add('hidden');
+            } else {
+              errorBanner.classList.remove('hidden');
+            }
+          } catch (e) {
+            console.error('Не удалось получить список броней', e);
+            errorBanner.classList.remove('hidden');
+          }
         }
-      }
 
       function isReserved(id) { return Boolean(SERVER_MAP[id]); }
       function reservedName(id) { return SERVER_MAP[id] || ''; }
@@ -139,6 +163,7 @@
       }
 
       async function renderWishlist() {
+        grid.innerHTML = WISHLIST.map(() => '<div class="wish-card skeleton" style="height:112px"></div>').join('');
         await refreshFromServer();
         grid.innerHTML = '';
         const filtered = WISHLIST.filter(item => !(onlyFree.checked && isReserved(item.id)));
@@ -151,7 +176,7 @@
           card.className = 'wish-card';
           const safeLink = /^https?:\/\//i.test(item.link || '') ? item.link : '#';
           const thumb = item.image
-            ? `<img src="${item.image}" alt="${escapeHtml(item.title)}">`
+            ? `<img src="${item.image}" alt="${escapeHtml(item.title)}" loading="lazy" width="80" height="80">`
             : '🎁';
           card.innerHTML = `
             <div class="wish-thumb" aria-hidden="true">${thumb}</div>
@@ -203,7 +228,7 @@
 
       hydrateBasics();
       renderWishlist();
-      setInterval(renderWishlist, 5000);
+      setInterval(renderWishlist, 60000);
       document.addEventListener('visibilitychange', () => { if (!document.hidden) renderWishlist(); });
 
       const timelineEl = document.getElementById('timeline');
@@ -221,8 +246,12 @@
     document.getElementById('heroIcs').addEventListener('click', downloadICS);
     document.getElementById('mapBtn').addEventListener('click', openMap);
     document.getElementById('heroMap').addEventListener('click', openMap);
-    document.getElementById('mapBtn2').addEventListener('click', openMap);
-    onlyFree.addEventListener('change', renderWishlist);
+      document.getElementById('mapBtn2').addEventListener('click', openMap);
+      document.getElementById('copyAddr').addEventListener('click', copyAddress);
+      onlyFree.addEventListener('change', () => {
+        localStorage.setItem('onlyFree', onlyFree.checked ? '1' : '0');
+        renderWishlist();
+      });
 document.getElementById('coupleNames').classList.add('couple-names');
 const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!prefersReduced){
