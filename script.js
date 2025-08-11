@@ -178,7 +178,7 @@ const prettyDate = (d) => new Intl.DateTimeFormat('ru-RU', {
 
       let SERVER_MAP = {}; // item_id -> name (активные брони)
 
-        async function refreshFromServer() {
+        async function fetchWishes() {
           try {
             const { ok, reservations } = await apiList();
             if (ok) {
@@ -191,7 +191,7 @@ const prettyDate = (d) => new Intl.DateTimeFormat('ru-RU', {
             console.error('Не удалось получить список броней', e);
             errorBanner.classList.remove('hidden');
             try {
-              const local = await fetch('wishlist-fallback.json').then(r => r.json());
+              const local = await fetch('./data/wishlist.json').then(r => r.json());
               SERVER_MAP = local.reservations || {};
             } catch (e2) {
               SERVER_MAP = {};
@@ -213,7 +213,7 @@ const prettyDate = (d) => new Intl.DateTimeFormat('ru-RU', {
 
       async function renderWishlist() {
         grid.innerHTML = WISHLIST.map(() => '<div class="wish-card skeleton" style="height:calc(128px + var(--gap))"></div>').join('');
-        await refreshFromServer();
+        await fetchWishes();
         grid.innerHTML = '';
         const filtered = WISHLIST.filter(item => !(onlyFree.checked && isReserved(item.id)));
         for (const item of filtered) {
@@ -343,16 +343,8 @@ const navObserver=new IntersectionObserver(entries=>{
 },{rootMargin:'-50% 0px -50% 0px'});
 sections.forEach(sec=>navObserver.observe(sec));
 
-const burger=document.getElementById('burger');
 const nav=document.querySelector('.nav');
-burger.setAttribute('aria-expanded','false');
-burger.addEventListener('click',()=>{
-  const expanded=burger.getAttribute('aria-expanded')==='true';
-  burger.setAttribute('aria-expanded',String(!expanded));
-  nav.classList.toggle('open');
-  if(!expanded){navLinks[0]&&navLinks[0].focus();}else{burger.focus();}
-});
-navLinks.forEach(l=>l.addEventListener('click',()=>{nav.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.focus();}));
-document.addEventListener('keydown',e=>{
-  if(e.key==='Escape'){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.focus();}
-});
+const burger=document.getElementById('burger');
+burger?.addEventListener('click',()=>{const opened=nav.classList.toggle('open');burger.setAttribute('aria-expanded',opened?'true':'false');});
+navLinks.forEach(l=>l.addEventListener('click',()=>{nav.classList.remove('open');burger.setAttribute('aria-expanded','false');}));
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');}});
