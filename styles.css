@@ -454,7 +454,7 @@ img {
 }
 .timeline {
   display: grid;
-  grid-template-columns: 88px 1fr;
+  grid-template-columns: 88px 32px 1fr;
   row-gap: 14px;
   column-gap: 16px;
   padding-left: 0;
@@ -462,12 +462,27 @@ img {
 .t-item {
   display: contents;
 }
+.t-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+}
+.t-icon img {
+  width: 24px;
+  height: 24px;
+}
 .t-time {
   font-weight: 700;
   align-self: start;
+  color: var(--wood);
 }
 .timeline::before {
   display: none;
+}
+#schedule .card {
+  background: linear-gradient(135deg, #fff, #f7ede4);
 }
 .nav a {
   color: var(--text-2);
