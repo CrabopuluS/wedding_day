@@ -90,7 +90,7 @@ img{display:block;max-width:100%;height:auto}
 .wish-actions{margin-left:auto;display:flex;gap:calc(var(--gap)/3);flex-wrap:wrap}
 .pill{padding:6px 10px;border-radius:999px;background:var(--bg-muted);color:var(--forest);font-size:12px;font-weight:600}
 .badge.reserved{background:#fef2f2;color:#991b1b;border:1px dashed #fecaca}
-.badge.free{background:#edfdf7;color:#065f46;border:1px dashed #a7f3d0}
+.badge.free{background:#edfdf7;color:#673923;border:1px dashed #966c4e}
 .timeline{display:grid;grid-template-columns:88px 1fr;row-gap:14px;column-gap:16px;padding-left:0}
 .t-item{display:contents}
 .t-time{font-weight:700;align-self:start}
