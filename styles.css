@@ -99,18 +99,15 @@ header.scrolled{box-shadow:0 2px 8px var(--shadow)}
 /* Hero */
 .hero{
   position:relative;overflow:hidden;padding:clamp(72px,10vw,120px) 0;text-align:center;
+  background:url('image/background.png') center/cover no-repeat;
   /* Keep optional image if provided + richer overlays */
 }
 .hero::before{
-  content:"";position:absolute;inset:0;z-index:-3;
-  background:
-    linear-gradient(180deg, rgba(250,248,246,0.85) 0%, rgba(250,248,246,0.80) 35%, rgba(250,248,246,0.95) 100%),
-    url('image/background.png') center/cover no-repeat;
-  filter:blur(6px) saturate(1.05);
-  transform:scale(1.05);
+  content:"";position:absolute;inset:0;z-index:-2;
+  background:linear-gradient(180deg, rgba(250,248,246,0.85) 0%, rgba(250,248,246,0.80) 35%, rgba(250,248,246,0.95) 100%);
 }
 .hero::after{
-  content:"";position:absolute;inset:0;z-index:-2;pointer-events:none;
+  content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
   background:
     radial-gradient(60% 50% at 50% -10%, rgba(255,255,255,.85), transparent 60%),
     radial-gradient(60% 50% at 110% 10%, rgba(0,196,179,.08), transparent 60%),
