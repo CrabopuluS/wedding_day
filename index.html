@@ -8,7 +8,11 @@
   <meta property="og:title" content="Свадебное приглашение" />
   <meta property="og:description" content="Присоединяйтесь к нашему празднику! Здесь — дата, место, программа и виш‑лист." />
   <meta property="og:image" content="image/og-image.jpg" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
   <meta property="og:url" content="https://example.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="canonical" href="https://example.com/" />
   <meta name="theme-color" content="#ffffff" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -23,6 +27,7 @@
        <a href="#details">Детали</a>
        <a href="#schedule">Программа</a>
        <a href="#wishlist">Подарки</a>
+       <a href="#rsvp">RSVP</a>
        <span class="spacer"></span>
        <button id="heroIcs" class="btn btn--primary">Добавить в календарь</button>
        <button id="heroMap" class="btn btn--ghost">Как добраться</button>
@@ -34,6 +39,7 @@
        <div id="dateChip" class="chip"></div>
        <h1 class="names" id="coupleNames"></h1>
        <p class="subtitle">Ждём вас <span id="dateTextHero"></span></p>
+       <div id="countdown" class="countdown"></div>
        <div class="cta">
          <button id="icsBtn" class="btn btn--primary">Добавить в календарь</button>
          <button id="mapBtn" class="btn btn--ghost">Как добраться</button>
@@ -58,11 +64,11 @@
              <h3 id="whereTitle">Где</h3>
              <p id="venueName"></p>
              <p id="venueAddr"></p>
-             <div style="margin-top:10px; display:flex; gap:8px; align-items:center;">
+             <div class="address-actions">
                <button id="mapBtn2" class="btn btn--ghost">Открыть карту</button>
                <button id="copyAddr" class="btn btn--secondary btn--icon" aria-label="Скопировать адрес">📋</button>
              </div>
-          </article>
+         </article>
  
            <article class="card sm-4" aria-labelledby="dressTitle">
              <h3 id="dressTitle">Дресс‑код</h3>
@@ -72,11 +78,11 @@
        </div>
      </section>
  
-     <section id="schedule">
-       <div class="container">
-         <h2 class="section-title">Программа</h2>
-         <div class="card">
-           <div class="timeline" id="timeline">
+    <section id="schedule">
+      <div class="container">
+        <h2 class="section-title">Программа</h2>
+        <div class="card">
+          <div class="timeline" id="timeline">
              <div class="t-item">
                <div class="t-time" id="tStart"></div>
                <div>Сбор гостей</div>
@@ -94,14 +100,25 @@
                <div>Конец</div>
              </div>
            </div>
-         </div>
-       </div>
-     </section>
- 
-     <section id="wishlist">
-       <div class="container">
-         <h2 class="section-title">Виш‑лист</h2>
-         <p class="section-note">Если вы собираетесь сделать подарок, но не знаете что и как, то мы подобрали список
+        </div>
+      </div>
+    </section>
+
+    <section id="rsvp">
+      <div class="container">
+        <h2 class="section-title">RSVP</h2>
+        <p class="section-note">Пожалуйста, подтвердите своё присутствие.</p>
+        <div class="rsvp-actions">
+          <a class="btn btn--primary" href="https://forms.gle/example" target="_blank" rel="noopener">Да</a>
+          <a class="btn btn--ghost" href="https://forms.gle/example" target="_blank" rel="noopener">Нет</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="wishlist">
+      <div class="container">
+        <h2 class="section-title">Виш‑лист</h2>
+        <p class="section-note">Если вы собираетесь сделать подарок, но не знаете что и как, то мы подобрали список
            возможных подарков, чтобы облегчить вам жизнь. Подарок можно забронировать, чтобы не было проблемы с тем, что
            кто-то решит подарить тоже самое.</p>
          <div id="wishError" class="banner hidden">Сервер недоступен, статусы могут быть неточны</div>

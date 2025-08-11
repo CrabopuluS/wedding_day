@@ -83,6 +83,22 @@
       document.title = `Свадьба — ${WEDDING.couple}`;
     }
 
+    function startCountdown() {
+      const el = document.getElementById('countdown');
+      if (!el) return;
+      const target = new Date(WEDDING.dateISO + 'T' + WEDDING.timeMain);
+      function update() {
+        const diff = target - new Date();
+        if (diff <= 0) { el.textContent = 'Уже сегодня!'; clearInterval(timer); return; }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor(diff % 86400000 / 3600000);
+        const m = Math.floor(diff % 3600000 / 60000);
+        el.textContent = `Осталось ${d}д ${h}ч ${m}м`;
+      }
+      update();
+      const timer = setInterval(update, 60000);
+    }
+
     // === КАЛЕНДАРЬ (.ICS) ===
     function downloadICS() {
       const tz = WEDDING.timezone || 'Europe/Moscow';
@@ -166,7 +182,7 @@
       }
 
       async function renderWishlist() {
-        grid.innerHTML = WISHLIST.map(() => '<div class="wish-card skeleton" style="height:112px"></div>').join('');
+        grid.innerHTML = WISHLIST.map(() => '<div class="wish-card skeleton" style="height:calc(128px + var(--gap))"></div>').join('');
         await refreshFromServer();
         grid.innerHTML = '';
         const filtered = WISHLIST.filter(item => !(onlyFree.checked && isReserved(item.id)));
@@ -180,7 +196,7 @@
           card.className = 'wish-card' + (reserved ? ' wish-card--reserved' : '');
           const safeLink = /^https?:\/\//i.test(item.link || '') ? item.link : '#';
           const thumb = item.image
-            ? `<img src="${item.image}" alt="${escapeHtml(item.title)}" loading="lazy" width="80" height="80">`
+            ? `<img src="${item.image}" alt="${escapeHtml(item.title)}" loading="lazy" width="128" height="128">`
             : '🎁';
           const btnLabel = reserved ? (hasToken ? 'Снять бронь' : 'Забронировано') : 'Забронировать';
           const btnDisabled = reserved && !hasToken ? 'disabled' : '';
@@ -228,6 +244,7 @@
       }
 
       hydrateBasics();
+      startCountdown();
       renderWishlist();
       setInterval(renderWishlist, 45000);
       document.addEventListener('visibilitychange', () => { if (!document.hidden) renderWishlist(); });
