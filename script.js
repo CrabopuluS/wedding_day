@@ -176,13 +176,16 @@
           const reserved = isReserved(item.id);
           const owner = reservedName(item.id);
           const nameLabel = reserved ? `Забронировано — ${escapeHtml(owner)}` : 'Свободно';
+          const hasToken = !!getToken(item.id);
 
           const card = document.createElement('div');
-          card.className = 'wish-card';
+          card.className = 'wish-card' + (reserved ? ' wish-card--reserved' : '');
           const safeLink = /^https?:\/\//i.test(item.link || '') ? item.link : '#';
           const thumb = item.image
             ? `<img src="${item.image}" alt="${escapeHtml(item.title)}" loading="lazy" width="80" height="80">`
             : '🎁';
+          const btnLabel = reserved ? (hasToken ? 'Снять бронь' : 'Забронировано') : 'Забронировать';
+          const btnDisabled = reserved && !hasToken ? 'disabled' : '';
           card.innerHTML = `
             <div class="wish-thumb" aria-hidden="true">${thumb}</div>
             <div class="wish-meta">
@@ -192,26 +195,29 @@
             <div class="wish-actions">
               <a class="btn btn--ghost" href="${safeLink}" target="_blank" rel="noopener">Смотреть</a>
               <span class="pill badge ${reserved ? 'reserved' : 'free'}">${nameLabel}</span>
-              <button class="btn btn--primary" aria-pressed="${reserved}" data-id="${item.id}">
-                ${reserved ? 'Снять бронь' : 'Забронировать'}
+              <button class="btn btn--primary" ${btnDisabled} aria-pressed="${reserved}" data-id="${item.id}">
+                ${btnLabel}
               </button>
             </div>`;
 
-          card.querySelector('button').addEventListener('click', async (e) => {
-            const id = e.currentTarget.getAttribute('data-id');
-            if (!isReserved(id)) {
-              reserveItemId = id;
-              reserveName.value = '';
-              reserveDialog.showModal();
-            } else {
-              const token = getToken(id);
-              if (!token) { alert('Снять бронь можно с того же устройства, где она оформлялась, либо напишите организаторам.'); return; }
-              const r = await apiCancel(id, token);
-              if (!r || !r.ok) { alert('Не удалось снять бронь.'); return; }
-              clearToken(id);
-              await renderWishlist();
-            }
-          });
+          const btn = card.querySelector('button');
+          if (!btn.disabled) {
+            btn.addEventListener('click', async (e) => {
+              const id = e.currentTarget.getAttribute('data-id');
+              if (!isReserved(id)) {
+                reserveItemId = id;
+                reserveName.value = '';
+                reserveDialog.showModal();
+              } else {
+                const token = getToken(id);
+                if (!token) { alert('Снять бронь можно с того же устройства, где она оформлялась, либо напишите организаторам.'); return; }
+                const r = await apiCancel(id, token);
+                if (!r || !r.ok) { alert('Не удалось снять бронь.'); return; }
+                clearToken(id);
+                await renderWishlist();
+              }
+            });
+          }
 
           grid.appendChild(card);
         }
@@ -225,7 +231,7 @@
 
       hydrateBasics();
       renderWishlist();
-      setInterval(renderWishlist, 60000);
+      setInterval(renderWishlist, 45000);
       document.addEventListener('visibilitychange', () => { if (!document.hidden) renderWishlist(); });
 
       const timelineEl = document.getElementById('timeline');
@@ -256,7 +262,7 @@
         if (name.length < 2) { alert('Пожалуйста, укажите имя (не короче 2 символов).'); return; }
         const r = await apiReserve(reserveItemId, name);
         if (!r || !r.ok) {
-          alert(r && r.error === 'already_reserved' ? 'Этот подарок уже успели забронировать.' : 'Ошибка бронирования. Попробуйте ещё раз.');
+          alert(r && r.error === 'already_reserved' ? 'Подарок уже забронирован другим гостем' : 'Ошибка бронирования. Попробуйте ещё раз.');
           return;
         }
         setToken(reserveItemId, r.token);
