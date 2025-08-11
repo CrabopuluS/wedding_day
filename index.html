@@ -10,9 +10,9 @@
   <meta property="og:image" content="image/og-image.jpg" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:url" content="https://example.com/" />
+  <meta property="og:url" content="" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="canonical" href="https://example.com/" />
+  <link rel="canonical" href="" />
   <meta name="theme-color" content="#ffffff" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,12 +24,12 @@
   <header>
     <nav class="nav">
       <span class="brand">Приглашение</span>
-      <button class="burger" id="burger" aria-label="Меню">
+      <button class="burger" id="burger" aria-label="Меню" aria-controls="navMenu" aria-expanded="false">
         <span></span>
         <span></span>
         <span></span>
       </button>
-      <div class="nav__links">
+      <div class="nav__links" id="navMenu">
         <a href="#details">Детали</a>
         <a href="#schedule">Программа</a>
         <a href="#rsvp">Я буду</a>
@@ -44,7 +44,7 @@
    <main>
      <section class="hero">
        <div id="dateChip" class="chip"></div>
-       <h1 class="names" id="coupleNames"></h1>
+       <h1 class="couple-names" id="coupleNames"></h1>
        <p class="subtitle">Ждём вас <span id="dateTextHero"></span></p>
        <div id="countdown" class="countdown"></div>
        <div class="cta">
@@ -116,8 +116,8 @@
         <h2 class="section-title">Я буду</h2>
         <p class="section-note">Пожалуйста, подтвердите своё присутствие.</p>
         <div class="rsvp-actions">
-          <a class="btn btn--primary" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=dialog" target="_blank" rel="noopener">Да</a>
-          <a class="btn btn--ghost" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=dialog" target="_blank" rel="noopener">Нет</a>
+          <a class="btn btn--primary" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=dialog&amp;entry.1234567890=Да" target="_blank" rel="noopener">Да</a>
+          <a class="btn btn--ghost" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=dialog&amp;entry.1234567890=Нет" target="_blank" rel="noopener">Нет</a>
         </div>
       </div>
     </section>

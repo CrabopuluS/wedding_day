@@ -55,12 +55,25 @@
         return res.json();
       }
       // === УТИЛИТЫ ДАТ/ФОРМАТОВ ===
-      const dt = new Date(WEDDING.dateISO + 'T' + (WEDDING.timeStart || '12:00'));
-    const prettyDate = (d) => new Intl.DateTimeFormat('ru-RU', {
-      day: 'numeric',
-      month: 'long',
-      year: 'numeric'
-    }).format(d);
+const dt = new Date(WEDDING.dateISO + 'T' + (WEDDING.timeStart || '12:00'));
+const prettyDate = (d) => new Intl.DateTimeFormat('ru-RU', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric'
+}).format(d);
+
+    function updateMetaUrls() {
+      const url = window.location.href.split('#')[0];
+      const canonical = document.querySelector('link[rel="canonical"]');
+      if (canonical) canonical.setAttribute('href', url);
+      const ogUrl = document.querySelector('meta[property="og:url"]');
+      if (ogUrl) ogUrl.setAttribute('content', url);
+      const ogImage = document.querySelector('meta[property="og:image"]');
+      if (ogImage) {
+        const imgUrl = new URL(ogImage.getAttribute('content'), url);
+        ogImage.setAttribute('content', imgUrl.toString());
+      }
+    }
 
     // Отрисовка основных данных
     function hydrateBasics() {
@@ -84,6 +97,7 @@
       document.getElementById('venueName').textContent = WEDDING.venueName;
       document.getElementById('venueAddr').textContent = WEDDING.address;
       document.title = `Свадьба — ${WEDDING.couple}`;
+      updateMetaUrls();
     }
 
     function startCountdown() {
@@ -147,6 +161,13 @@
       const reserveName = document.getElementById('reserveName');
       const reserveCancel = document.getElementById('reserveCancel');
       let reserveItemId = null;
+      const supportsDialog = typeof HTMLDialogElement === 'function' && typeof reserveDialog.showModal === 'function';
+      function openReserveDialog(){
+        supportsDialog ? reserveDialog.showModal() : reserveDialog.classList.remove('hidden');
+        reserveName.focus();
+      }
+      function closeReserveDialog(){ supportsDialog ? reserveDialog.close() : reserveDialog.classList.add('hidden'); }
+      if(!supportsDialog){ reserveDialog.classList.add('modal-fallback','hidden'); document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !reserveDialog.classList.contains('hidden')) closeReserveDialog(); }); }
 
       onlyFree.checked = localStorage.getItem('onlyFree') === '1';
 
@@ -163,12 +184,18 @@
             if (ok) {
               SERVER_MAP = reservations || {};
               errorBanner.classList.add('hidden');
-            } else {
-              errorBanner.classList.remove('hidden');
+              return;
             }
+            throw new Error('bad response');
           } catch (e) {
             console.error('Не удалось получить список броней', e);
             errorBanner.classList.remove('hidden');
+            try {
+              const local = await fetch('wishlist-fallback.json').then(r => r.json());
+              SERVER_MAP = local.reservations || {};
+            } catch (e2) {
+              SERVER_MAP = {};
+            }
           }
         }
 
@@ -224,7 +251,7 @@
               if (!isReserved(id)) {
                 reserveItemId = id;
                 reserveName.value = '';
-                reserveDialog.showModal();
+                openReserveDialog();
               } else {
                 const token = getToken(id);
                 if (!token) { alert('Снять бронь можно с того же устройства, где она оформлялась, либо напишите организаторам.'); return; }
@@ -273,7 +300,7 @@
         localStorage.setItem('onlyFree', onlyFree.checked ? '1' : '0');
         renderWishlist();
       });
-      reserveCancel.addEventListener('click', () => reserveDialog.close());
+      reserveCancel.addEventListener('click', () => closeReserveDialog());
       reserveForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const name = reserveName.value.trim();
@@ -284,10 +311,9 @@
           return;
         }
         setToken(reserveItemId, r.token);
-        reserveDialog.close();
+        closeReserveDialog();
         await renderWishlist();
       });
-document.getElementById('coupleNames').classList.add('couple-names');
 const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 if(!prefersReduced){
   document.querySelectorAll('section, footer').forEach(el=>el.setAttribute('data-reveal',''));
@@ -319,5 +345,14 @@ sections.forEach(sec=>navObserver.observe(sec));
 
 const burger=document.getElementById('burger');
 const nav=document.querySelector('.nav');
-burger.addEventListener('click',()=>nav.classList.toggle('open'));
-navLinks.forEach(l=>l.addEventListener('click',()=>nav.classList.remove('open')));
+burger.setAttribute('aria-expanded','false');
+burger.addEventListener('click',()=>{
+  const expanded=burger.getAttribute('aria-expanded')==='true';
+  burger.setAttribute('aria-expanded',String(!expanded));
+  nav.classList.toggle('open');
+  if(!expanded){navLinks[0]&&navLinks[0].focus();}else{burger.focus();}
+});
+navLinks.forEach(l=>l.addEventListener('click',()=>{nav.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.focus();}));
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape'){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');burger.focus();}
+});
