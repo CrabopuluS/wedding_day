@@ -438,7 +438,7 @@
 
       hydrateBasics();
       renderWishlist();
-      setInterval(renderWishlist, 10000);
+      setInterval(renderWishlist, 5000);
       document.addEventListener('visibilitychange', () => { if (!document.hidden) renderWishlist(); });
 
       const timelineEl = document.getElementById('timeline');
