@@ -185,9 +185,9 @@
               <p class="wish-note">${escapeHtml(item.note || '')} ${item.price ? '• '+escapeHtml(item.price) : ''}</p>
             </div>
             <div class="wish-actions">
-              <a class="btn ghost" href="${safeLink}" target="_blank" rel="noopener">Смотреть</a>
+              <a class="btn btn--ghost" href="${safeLink}" target="_blank" rel="noopener">Смотреть</a>
               <span class="pill badge ${reserved ? 'reserved' : 'free'}">${nameLabel}</span>
-              <button class="btn primary" aria-pressed="${reserved}" data-id="${item.id}">
+              <button class="btn btn--primary" aria-pressed="${reserved}" data-id="${item.id}">
                 ${reserved ? 'Снять бронь' : 'Забронировать'}
               </button>
             </div>`;
@@ -271,3 +271,13 @@ window.addEventListener('scroll',()=>{
   if(window.scrollY>0) header.classList.add('scrolled');
   else header.classList.remove('scrolled');
 });
+
+const navLinks=document.querySelectorAll('.nav a[href^="#"]');
+const sections=Array.from(navLinks).map(l=>document.querySelector(l.getAttribute('href'))).filter(Boolean);
+const navObserver=new IntersectionObserver(entries=>{
+  entries.forEach(entry=>{
+    const link=document.querySelector(`.nav a[href="#${entry.target.id}"]`);
+    if(link){entry.isIntersecting?link.classList.add('is-active'):link.classList.remove('is-active');}
+  });
+},{rootMargin:'-50% 0px -50% 0px'});
+sections.forEach(sec=>navObserver.observe(sec));
