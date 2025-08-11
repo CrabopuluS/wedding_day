@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Свадьба — Приглашение</title>
-  <meta name="description" content="Свадебное приглашение: дата, место, программа и виш‑лист." />
-
-  <!-- OpenGraph / Twitter -->
+  <meta name="description" content="Шаблон сайта‑приглашения на свадьбу: дата, место, программа и виш‑лист." />
   <meta property="og:title" content="Свадебное приглашение" />
   <meta property="og:description" content="Присоединяйтесь к нашему празднику! Здесь — дата, место, программа и виш‑лист." />
   <meta property="og:image" content="image/og-image.jpg" />
@@ -14,32 +12,22 @@
   <meta property="og:image:height" content="630" />
   <meta property="og:url" content="https://crabopulus.github.io/wedding_day/" />
   <meta name="twitter:card" content="summary_large_image" />
-
-  <!-- Basic hardening (works on GH Pages for most modern browsers) -->
-  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
-  <!-- If wishlist API is a Google Apps Script, allow connects to it; adjust if you self-host later -->
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self' https://script.google.com https://script.googleusercontent.com; object-src 'none'; frame-ancestors 'none'">
-
   <link rel="canonical" href="https://crabopulus.github.io/wedding_day/" />
   <meta name="theme-color" content="#FAF8F6" />
-
-  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Inter:wght@400;500;600&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-
   <link rel="stylesheet" href="styles.css">
-</head>
-
-<body id="top">
-  <a class="visually-hidden-focusable" href="#main">Пропустить к основному содержимому</a>
-
+ </head>
+ 
+ <body id="top">
   <header>
-    <nav class="nav" aria-label="Главная навигация">
+    <nav class="nav">
       <span class="brand"><a href="#top">Приглашение</a></span>
-      <button class="burger" id="burger" aria-label="Открыть меню" aria-controls="navLinks" aria-expanded="false">
-        <span></span><span></span><span></span>
+      <button class="burger" id="burger" aria-label="Меню" aria-controls="navLinks" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
       </button>
       <div class="nav__links" id="navLinks">
         <a href="#details">Детали</a>
@@ -47,64 +35,78 @@
         <a href="#rsvp">Я буду</a>
         <a href="#wishlist">Подарки</a>
         <span class="spacer"></span>
-        <button id="navIcs" class="btn btn--primary">Добавить в календарь</button>
-        <button id="navMap" class="btn btn--ghost">Как добраться</button>
+        <button id="heroIcs" class="btn btn--primary">Добавить в календарь</button>
+        <button id="heroMap" class="btn btn--ghost">Как добраться</button>
       </div>
     </nav>
   </header>
-
-  <main id="main">
-    <section class="hero" aria-labelledby="heroTitle">
-      <div id="dateChip" class="chip" aria-live="polite"></div>
-      <h1 class="couple-names" id="coupleNames">Имя & Имя</h1>
-      <p id="heroTitle" class="subtitle">Ждём вас <span id="dateTextHero"></span></p>
-      <div id="countdown" class="countdown" aria-live="polite"></div>
-      <div class="cta">
-        <button id="icsBtn" class="btn btn--primary">Добавить в календарь</button>
-        <button id="mapBtn" class="btn btn--ghost">Как добраться</button>
-      </div>
-    </section>
-
-    <section id="details">
-      <div class="container">
-        <h2 class="section-title">Детали события</h2>
-        <p class="section-note section-note--warning"><strong>Просим прийти чуть заранее. ⚠️ Вход строго по пропускам — не опаздывайте!</strong></p>
-
-        <div class="grid details-grid">
-          <article class="card" aria-labelledby="whenTitle">
-            <h3 id="whenTitle">Когда</h3>
-            <p><strong id="dateText"></strong> в <strong id="mainTime"></strong></p>
-            <p>Сбор гостей — <strong id="startTime"></strong>, подъем на башню — <strong id="ceremonyTime"></strong></p>
-          </article>
-
-          <article class="card" aria-labelledby="whereTitle">
-            <h3 id="whereTitle">Где</h3>
-            <p id="venueName"></p>
-            <p id="venueAddr"></p>
-            <div class="address-actions">
-              <button id="mapBtn2" class="btn btn--ghost">Открыть карту</button>
-              <button id="copyAddr" class="btn btn--secondary btn--icon" aria-label="Скопировать адрес" title="Скопировать адрес">📋</button>
-            </div>
-          </article>
-
-          <article class="card" aria-labelledby="dressTitle">
-            <h3 id="dressTitle">Дресс‑код</h3>
-            <p>Дресс‑кода нет. Но если хотите красивые фото — вы знаете, что делать 😉</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
+ 
+   <main>
+     <section class="hero">
+       <div id="dateChip" class="chip"></div>
+       <h1 class="couple-names" id="coupleNames"></h1>
+       <p class="subtitle">Ждём вас <span id="dateTextHero"></span></p>
+       <div id="countdown" class="countdown"></div>
+       <div class="cta">
+         <button id="icsBtn" class="btn btn--primary">Добавить в календарь</button>
+         <button id="mapBtn" class="btn btn--ghost">Как добраться</button>
+       </div>
+     </section>
+ 
+     <section id="details">
+       <div class="container">
+         <h2 class="section-title">Детали события</h2>
+         <p class="section-note">Приходите чуть заранее. <span class="pass-warning">⚠️ Вход строго по пропускам, поэтому
+             не опаздывать!!!</span></p>
+ 
+         <div class="grid">
+           <article class="card sm-4" aria-labelledby="whenTitle">
+             <h3 id="whenTitle">Когда</h3>
+             <p><strong id="dateText"></strong> в <strong id="mainTime"></strong></p>
+             <p>Сбор гостей — <strong id="startTime"></strong>, торжественная часть — <strong id="ceremonyTime"></strong>
+             </p>
+           </article>
+ 
+           <article class="card sm-4" aria-labelledby="whereTitle">
+             <h3 id="whereTitle">Где</h3>
+             <p id="venueName"></p>
+             <p id="venueAddr"></p>
+             <div class="address-actions">
+               <button id="mapBtn2" class="btn btn--ghost">Открыть карту</button>
+               <button id="copyAddr" class="btn btn--secondary btn--icon" aria-label="Скопировать адрес">📋</button>
+             </div>
+         </article>
+ 
+           <article class="card sm-4" aria-labelledby="dressTitle">
+             <h3 id="dressTitle">Дресс‑код</h3>
+             <p>Дресс‑кода нет. Но если хотите красивые фоточки — вы знаете, что делать 😉</p>
+           </article>
+         </div>
+       </div>
+     </section>
+ 
     <section id="schedule">
       <div class="container">
         <h2 class="section-title">Программа</h2>
         <div class="card">
           <div class="timeline" id="timeline">
-            <div class="t-item"><div class="t-time" id="tStart"></div><div>Сбор гостей</div></div>
-            <div class="t-item"><div class="t-time" id="tCeremony"></div><div>Поднимаемся на башню</div></div>
-            <div class="t-item"><div class="t-time" id="tMain"></div><div>Церемония</div></div>
-            <div class="t-item"><div class="t-time" id="tEnd"></div><div>Конец</div></div>
-          </div>
+             <div class="t-item">
+               <div class="t-time" id="tStart"></div>
+               <div>Сбор гостей</div>
+             </div>
+             <div class="t-item">
+               <div class="t-time" id="tCeremony"></div>
+               <div>Поднимаемся на башню</div>
+             </div>
+             <div class="t-item">
+               <div class="t-time" id="tMain"></div>
+               <div>Церемония</div>
+             </div>
+             <div class="t-item">
+               <div class="t-time" id="tEnd"></div>
+               <div>Конец</div>
+             </div>
+           </div>
         </div>
       </div>
     </section>
@@ -114,8 +116,8 @@
         <h2 class="section-title">Я буду</h2>
         <p class="section-note">Пожалуйста, подтвердите своё присутствие.</p>
         <div class="rsvp-actions">
-          <a class="btn btn--primary" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=pp_url&amp;entry.1234567890=Да" target="_blank" rel="noopener noreferrer">Да</a>
-          <a class="btn btn--ghost" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=pp_url&amp;entry.1234567890=Нет" target="_blank" rel="noopener noreferrer">Нет</a>
+          <a class="btn btn--primary" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=pp_url&amp;entry.1234567890=Да" target="_blank" rel="noopener">Да</a>
+          <a class="btn btn--ghost" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=pp_url&amp;entry.1234567890=Нет" target="_blank" rel="noopener">Нет</a>
         </div>
       </div>
     </section>
@@ -123,28 +125,30 @@
     <section id="wishlist">
       <div class="container">
         <h2 class="section-title">Виш‑лист</h2>
-        <p class="section-note">Можно забронировать подарок, чтобы избежать дублей. Спасибо! 💛</p>
-        <div id="wishError" class="banner hidden" role="alert">Сервер недоступен — статусы могут быть неточны</div>
-        <div class="filters">
-          <label><input type="checkbox" id="onlyFree" /> Только свободные</label>
-        </div>
+        <p class="section-note">Если вы собираетесь сделать подарок, но не знаете что и как, то мы подобрали список
+           возможных подарков, чтобы облегчить вам жизнь. Подарок можно забронировать, чтобы не было проблемы с тем, что
+           кто-то решит подарить тоже самое.</p>
+         <div id="wishError" class="banner hidden">Сервер недоступен, статусы могут быть неточны</div>
+         <div class="filters">
+           <label><input type="checkbox" id="onlyFree" /> Только свободные</label>
+         </div>
         <div id="wishGrid" class="wish-grid" role="status" aria-live="polite"></div>
       </div>
     </section>
   </main>
 
   <footer>
-    <div class="container">
-      Если возникли вопросы — напишите нам:
-      <a class="footer-phone" href="tel:+79032274106" aria-label="Позвонить">+7 (903) 227‑41‑06</a>
-      <br />С любовью, <span id="footerNames">Имя &amp; Имя</span>
-    </div>
+     <div class="container">
+       Если возникли вопросы — напишите нам: <a href="tel:+79032274106" aria-label="Телефон"
+         style="color:inherit; font-weight:700; text-decoration:none;">+7 (903) 227‑41‑06</a>
+       <br />С любовью, <span id="footerNames">Имя &amp; Имя</span>
+     </div>
   </footer>
 
   <dialog id="reserveDialog">
     <form method="dialog" id="reserveForm">
       <label for="reserveName">Ваше имя</label>
-      <input type="text" id="reserveName" required autocomplete="name" />
+      <input type="text" id="reserveName" required />
       <menu>
         <button type="submit" class="btn btn--primary">Забронировать</button>
         <button type="button" id="reserveCancel" class="btn btn--ghost">Отмена</button>
@@ -152,6 +156,6 @@
     </form>
   </dialog>
 
-  <script src="script.js" type="module" defer></script>
+  <script src="script.js"></script>
 </body>
 </html>
