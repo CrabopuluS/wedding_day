@@ -55,33 +55,32 @@
  
      <section id="details">
        <div class="container">
-         <h2 class="section-title">Детали события</h2>
-         <p class="section-note">Приходите чуть заранее. <span class="pass-warning">⚠️ Вход строго по пропускам, поэтому
-             не опаздывать!!!</span></p>
- 
-         <div class="grid">
-           <article class="card sm-4" aria-labelledby="whenTitle">
-             <h3 id="whenTitle">Когда</h3>
-             <p><strong id="dateText"></strong> в <strong id="mainTime"></strong></p>
-             <p>Сбор гостей — <strong id="startTime"></strong>, торжественная часть — <strong id="ceremonyTime"></strong>
-             </p>
-           </article>
- 
-           <article class="card sm-4" aria-labelledby="whereTitle">
-             <h3 id="whereTitle">Где</h3>
-             <p id="venueName"></p>
-             <p id="venueAddr"></p>
-             <div class="address-actions">
-               <button id="mapBtn2" class="btn btn--ghost">Открыть карту</button>
-               <button id="copyAddr" class="btn btn--secondary btn--icon" aria-label="Скопировать адрес">📋</button>
-             </div>
-         </article>
- 
-           <article class="card sm-4" aria-labelledby="dressTitle">
-             <h3 id="dressTitle">Дресс‑код</h3>
-             <p>Дресс‑кода нет. Но если хотите красивые фоточки — вы знаете, что делать 😉</p>
-           </article>
-         </div>
+        <h2 class="section-title">Детали события</h2>
+        <p class="section-note section-note--warning"><strong>Приходите чуть заранее.</strong> ⚠️ Вход строго по пропускам — <strong>не опаздывайте.</strong></p>
+
+        <div class="grid">
+          <article class="card details-card" aria-labelledby="whenTitle">
+            <h3 id="whenTitle">Когда</h3>
+            <p><strong id="dateText"></strong> в <strong id="mainTime"></strong></p>
+            <p>Сбор гостей — <strong id="startTime"></strong>, торжественная часть — <strong id="ceremonyTime"></strong>
+            </p>
+          </article>
+
+          <article class="card details-card" aria-labelledby="whereTitle">
+            <h3 id="whereTitle">Где</h3>
+            <p id="venueName"></p>
+            <p id="venueAddr"></p>
+            <div class="address-actions">
+              <button id="mapBtn2" class="btn btn--ghost">Открыть карту</button>
+              <button id="copyAddr" class="btn btn--secondary btn--icon" aria-label="Скопировать адрес">📋</button>
+            </div>
+        </article>
+
+          <article class="card details-card" aria-labelledby="dressTitle">
+            <h3 id="dressTitle">Дресс‑код</h3>
+            <p>Дресс‑кода нет. Но если хотите красивые фоточки — вы знаете, что делать 😉</p>
+          </article>
+        </div>
        </div>
      </section>
  
