@@ -108,19 +108,29 @@
          <div class="filters">
            <label><input type="checkbox" id="onlyFree" /> Только свободные</label>
          </div>
-         <div id="wishGrid" class="wish-grid"></div>
-       </div>
-     </section>
-   </main>
- 
-   <footer>
+        <div id="wishGrid" class="wish-grid" role="status" aria-live="polite"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
      <div class="container">
        Если возникли вопросы — напишите нам: <a href="tel:+79032274106" aria-label="Телефон"
          style="color:inherit; font-weight:700; text-decoration:none;">+7 (903) 227‑41‑06</a>
        <br />С любовью, <span id="footerNames">Имя &amp; Имя</span>
      </div>
-   </footer>
- 
+  </footer>
+
+  <dialog id="reserveDialog">
+    <form method="dialog" id="reserveForm">
+      <label for="reserveName">Ваше имя</label>
+      <input type="text" id="reserveName" required />
+      <menu>
+        <button type="submit" class="btn btn--primary">Забронировать</button>
+        <button type="button" id="reserveCancel" class="btn btn--ghost">Отмена</button>
+      </menu>
+    </form>
+  </dialog>
 
   <script src="script.js"></script>
 </body>
