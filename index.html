@@ -385,8 +385,11 @@
           const card = document.createElement('div');
           card.className = 'wish-card';
           const safeLink = /^https?:\/\//i.test(item.link || '') ? item.link : '#';
+          const thumb = item.image
+            ? `<img src="${item.image}" alt="${escapeHtml(item.title)}">`
+            : '🎁';
           card.innerHTML = `
-            <div class="wish-thumb" aria-hidden="true">🎁</div>
+            <div class="wish-thumb" aria-hidden="true">${thumb}</div>
             <div class="wish-meta">
               <h4 class="wish-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</h4>
               <p class="wish-note">${escapeHtml(item.note || '')} ${item.price ? '• '+escapeHtml(item.price) : ''}</p>
