@@ -125,6 +125,11 @@
       const grid = document.getElementById('wishGrid');
       const onlyFree = document.getElementById('onlyFree');
       const errorBanner = document.getElementById('wishError');
+      const reserveDialog = document.getElementById('reserveDialog');
+      const reserveForm = document.getElementById('reserveForm');
+      const reserveName = document.getElementById('reserveName');
+      const reserveCancel = document.getElementById('reserveCancel');
+      let reserveItemId = null;
 
       onlyFree.checked = localStorage.getItem('onlyFree') === '1';
 
@@ -195,17 +200,9 @@
           card.querySelector('button').addEventListener('click', async (e) => {
             const id = e.currentTarget.getAttribute('data-id');
             if (!isReserved(id)) {
-              let name = prompt('Введите ваше имя, чтобы забронировать подарок:');
-              if (!name) return;
-              name = name.trim();
-              if (name.length < 2) { alert('Пожалуйста, укажите имя (не короче 2 символов).'); return; }
-              const r = await apiReserve(id, name);
-              if (!r || !r.ok) {
-                alert(r && r.error === 'already_reserved' ? 'Этот подарок уже успели забронировать.' : 'Ошибка бронирования. Попробуйте ещё раз.');
-                return;
-              }
-              setToken(id, r.token);
-              await renderWishlist();
+              reserveItemId = id;
+              reserveName.value = '';
+              reserveDialog.showModal();
             } else {
               const token = getToken(id);
               if (!token) { alert('Снять бронь можно с того же устройства, где она оформлялась, либо напишите организаторам.'); return; }
@@ -251,6 +248,20 @@
       onlyFree.addEventListener('change', () => {
         localStorage.setItem('onlyFree', onlyFree.checked ? '1' : '0');
         renderWishlist();
+      });
+      reserveCancel.addEventListener('click', () => reserveDialog.close());
+      reserveForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const name = reserveName.value.trim();
+        if (name.length < 2) { alert('Пожалуйста, укажите имя (не короче 2 символов).'); return; }
+        const r = await apiReserve(reserveItemId, name);
+        if (!r || !r.ok) {
+          alert(r && r.error === 'already_reserved' ? 'Этот подарок уже успели забронировать.' : 'Ошибка бронирования. Попробуйте ещё раз.');
+          return;
+        }
+        setToken(reserveItemId, r.token);
+        reserveDialog.close();
+        await renderWishlist();
       });
 document.getElementById('coupleNames').classList.add('couple-names');
 const prefersReduced=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
