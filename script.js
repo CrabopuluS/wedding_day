@@ -85,11 +85,12 @@
 
     // === КАЛЕНДАРЬ (.ICS) ===
     function downloadICS() {
+      const tz = WEDDING.timezone || 'Europe/Moscow';
       const compact = (s) => s.replace(/[-:]/g, '');
-      const dtStart = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeMain || '12:00')}00`;
-      const dtEnd = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeEnd || WEDDING.timeMain)}00`;
-      const dtStamp = compact(new Date().toISOString()).split('.')[0] + 'Z';
-      const ics = `BEGIN:VCALENDAR\r\nVERSION:2.0\r\nBEGIN:VEVENT\r\nDTSTAMP:${dtStamp}\r\nDTSTART;TZID=${WEDDING.timezone}:${dtStart}\r\nDTEND;TZID=${WEDDING.timezone}:${dtEnd}\r\nSUMMARY:${WEDDING.couple}\r\nLOCATION:${WEDDING.venueName}, ${WEDDING.address}\r\nEND:VEVENT\r\nEND:VCALENDAR`;
+      const start = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeMain)}00`;
+      const end = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeEnd)}00`;
+      const nowUTC = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+Z/, 'Z');
+      const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Wedding//Invitation//RU\nX-WR-TIMEZONE:${tz}\nBEGIN:VEVENT\nUID:${Date.now()}@wedding\nDTSTAMP:${nowUTC}\nDTSTART;TZID=${tz}:${start}\nDTEND;TZID=${tz}:${end}\nSUMMARY:Свадьба — ${WEDDING.couple}\nLOCATION:${WEDDING.venueName}, ${WEDDING.address}\nEND:VEVENT\nEND:VCALENDAR`;
       const blob = new Blob([ics], { type: 'text/calendar' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
@@ -113,12 +114,9 @@
       window.open(mapUrl(), '_blank', 'noopener');
     }
 
-    function copyAddress() {
-      if (navigator.clipboard) {
-        navigator.clipboard.writeText(WEDDING.address).then(() => {
-          alert('Адрес скопирован');
-        });
-      }
+    async function copyAddress() {
+      await navigator.clipboard.writeText(`${WEDDING.venueName}, ${WEDDING.address}`);
+      alert('Адрес скопирован');
     }
 
       // === ВИШ-ЛИСТ ===
