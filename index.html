@@ -67,8 +67,7 @@
             <p id="venueName"></p>
             <p id="venueAddr"></p>
             <div class="address-actions">
-              <button id="mapBtn2" class="btn btn--ghost">Открыть карту</button>
-              <button id="copyAddr" class="btn btn--secondary btn--icon" aria-label="Скопировать адрес">📋</button>
+              <button id="mapBtn2" class="btn btn--secondary">📍 Открыть карту</button>
             </div>
         </article>
 
@@ -109,8 +108,7 @@
         <h2 class="section-title">Я буду</h2>
         <p class="section-note">Пожалуйста, подтвердите своё присутствие.</p>
         <div class="rsvp-actions">
-          <a class="btn btn--primary" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=pp_url&amp;entry.1234567890=Да" target="_blank" rel="noopener">Да</a>
-          <a class="btn btn--ghost" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=pp_url&amp;entry.1234567890=Нет" target="_blank" rel="noopener">Нет</a>
+          <a class="btn btn--primary" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=pp_url" target="_blank" rel="noopener">Открыть форму подтверждения</a>
         </div>
     </section>
 
@@ -122,7 +120,11 @@
            кто-то решит подарить тоже самое.</p>
          <div id="wishError" class="banner hidden">Сервер недоступен, статусы могут быть неточны</div>
          <div class="filters">
-           <label><input type="checkbox" id="onlyFree" /> Только свободные</label>
+           <label class="filter-option">
+             <img src="https://img.icons8.com/ios-glyphs/20/a8773b/filter.png" alt="" aria-hidden="true" />
+             <input type="checkbox" id="onlyFree" />
+             <span>Только свободные</span>
+           </label>
          </div>
         <div id="wishGrid" class="wish-grid" role="status" aria-live="polite"></div>
       </div>

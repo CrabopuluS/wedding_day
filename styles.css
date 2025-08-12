@@ -145,7 +145,6 @@ h3 {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 var(--space-3);
 }
 .container p {
   max-width: 65ch;
@@ -270,6 +269,7 @@ header.scrolled {
   display: flex;
   align-items: center;
   gap: calc(var(--gap) * 2 / 3);
+  padding: 0 var(--space-3);
 }
 .nav__links {
   position: absolute;
@@ -371,11 +371,11 @@ header.scrolled {
 .spacer {
   flex: 1;
 }
-  .hero {
+.hero {
     position: relative;
     overflow: hidden;
     min-height: 100vh;
-    padding: calc(var(--gap) * 2) 0;
+    padding: calc(var(--gap) * 2) var(--space-3);
     text-align: center;
     display: flex;
     flex-direction: column;
@@ -397,13 +397,15 @@ header.scrolled {
   z-index: -1;
 }
 .hero .subtitle {
-  color: var(--text-primary);
+  color: var(--white);
   font-size: clamp(24px, 3.9vw, 33px);
   margin-bottom: calc(var(--gap) * 2);
+  text-shadow: 0 2px 4px rgba(0,0,0,.5);
 }
 .hero .names,
 .hero .couple-names {
-  text-shadow: 0 1px 0 rgba(253, 253, 251, 0.6);
+  color: var(--white);
+  text-shadow: 0 2px 4px rgba(0,0,0,.7);
   margin-top: calc(var(--gap) * 2);
 }
 .hero > * {
@@ -411,7 +413,7 @@ header.scrolled {
 }
 
 section {
-  padding: clamp(64px, 8vw, 96px) 0;
+  padding: clamp(64px, 8vw, 96px) var(--space-3);
   scroll-margin-top: 80px;
 } /* под реальную высоту header */
 main > section:nth-of-type(2n) {
@@ -495,7 +497,7 @@ img {
 }
 .wish-thumb {
   width: 100%;
-  aspect-ratio: 1 / 1;
+  aspect-ratio: 4 / 3;
   border-radius: calc(var(--radius) / 2);
   background: var(--bg-muted);
   display: flex;
@@ -517,27 +519,9 @@ img {
 .wish-actions .btn {
   width: 100%;
 }
-@media (min-width: 600px) {
-  .wish-card {
-    flex-direction: row;
-    text-align: left;
-    align-items: center;
-  }
-  .wish-thumb {
-    width: 128px;
-    height: 128px;
-    aspect-ratio: auto;
-    flex-shrink: 0;
-  }
-  .wish-actions {
-    width: auto;
-    flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
-    margin-left: auto;
-  }
-  .wish-actions .btn {
-    width: auto;
+@media (min-width: 1024px) {
+  .wish-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 .pill {
@@ -625,6 +609,19 @@ img {
   gap: calc(var(--gap) / 3);
   align-items: center;
   margin-bottom: calc(var(--gap) / 1.5);
+}
+.filter-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.filter-option img {
+  width: 20px;
+  height: 20px;
 }
 .section-note {
   margin-bottom: var(--gap);
