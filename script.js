@@ -102,16 +102,24 @@
       const el = document.getElementById('countdown');
       if (!el) return;
       const target = new Date(`${WEDDING.dateISO}T${WEDDING.timeMain}:00+03:00`);
+      const dd = el.querySelectorAll('#cd-days .digit');
+      const hh = el.querySelectorAll('#cd-hours .digit');
+      const mm = el.querySelectorAll('#cd-minutes .digit');
+      const ss = el.querySelectorAll('#cd-seconds .digit');
       function update() {
         const diff = target - new Date();
-        if (diff <= 0) { el.textContent = ''; el.style.display = 'none'; clearInterval(timer); return; }
-        const d = Math.floor(diff / 86400000);
-        const h = Math.floor(diff % 86400000 / 3600000);
-        const m = Math.floor(diff % 3600000 / 60000);
-        el.textContent = `Осталось ${d}д ${h}ч ${m}м`;
+        if (diff <= 0) { el.style.display = 'none'; clearInterval(timer); return; }
+        const d = String(Math.floor(diff / 86400000)).padStart(2, '0');
+        const h = String(Math.floor(diff % 86400000 / 3600000)).padStart(2, '0');
+        const m = String(Math.floor(diff % 3600000 / 60000)).padStart(2, '0');
+        const s = String(Math.floor(diff % 60000 / 1000)).padStart(2, '0');
+        dd[0].textContent = d[0]; dd[1].textContent = d[1];
+        hh[0].textContent = h[0]; hh[1].textContent = h[1];
+        mm[0].textContent = m[0]; mm[1].textContent = m[1];
+        ss[0].textContent = s[0]; ss[1].textContent = s[1];
       }
       update();
-      const timer = setInterval(update, 60000);
+      const timer = setInterval(update, 1000);
     }
 
     // === КАЛЕНДАРЬ (.ICS) ===
