@@ -46,7 +46,73 @@
   <main>
     <section class="hero">
       <h1 class="couple-names" id="coupleNames"></h1>
-      <p class="subtitle">Ждём вас <span id="dateTextHero"></span></p>
+      <p class="subtitle" id="heroInvite"></p>
+      <p class="hero-date" id="dateTextHero"></p>
+    </section>
+
+    <section id="calendar" class="calendar-section">
+      <h2 class="section-title">Календарь</h2>
+      <table class="calendar-table" aria-label="Календарь Август 2025">
+        <caption>Август 2025</caption>
+        <thead>
+          <tr>
+            <th>Пн</th>
+            <th>Вт</th>
+            <th>Ср</th>
+            <th>Чт</th>
+            <th>Пт</th>
+            <th>Сб</th>
+            <th>Вс</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td><span class="day">1</span></td>
+            <td><span class="day">2</span></td>
+            <td><span class="day">3</span></td>
+          </tr>
+          <tr>
+            <td><span class="day">4</span></td>
+            <td><span class="day">5</span></td>
+            <td><span class="day">6</span></td>
+            <td><span class="day">7</span></td>
+            <td><span class="day">8</span></td>
+            <td><span class="day">9</span></td>
+            <td><span class="day">10</span></td>
+          </tr>
+          <tr>
+            <td><span class="day">11</span></td>
+            <td><span class="day">12</span></td>
+            <td><span class="day">13</span></td>
+            <td><span class="day">14</span></td>
+            <td><span class="day">15</span></td>
+            <td><span class="day">16</span></td>
+            <td><span class="day">17</span></td>
+          </tr>
+          <tr>
+            <td><span class="day">18</span></td>
+            <td><span class="day">19</span></td>
+            <td><span class="day">20</span></td>
+            <td><span class="day">21</span></td>
+            <td><span class="day">22</span></td>
+            <td><span class="day">23</span></td>
+            <td><span class="day">24</span></td>
+          </tr>
+          <tr>
+            <td><span class="day">25</span></td>
+            <td><span class="day">26</span></td>
+            <td><span class="day">27</span></td>
+            <td><span class="day">28</span></td>
+            <td><span class="day">29</span></td>
+            <td><span class="day day--selected">30</span></td>
+            <td><span class="day">31</span></td>
+          </tr>
+        </tbody>
+      </table>
     </section>
 
     <section id="details">
@@ -67,7 +133,9 @@
             <p id="venueName"></p>
             <p id="venueAddr"></p>
             <div class="address-actions">
-              <button id="mapBtn2" class="btn btn--secondary">📍 Открыть карту</button>
+              <button id="mapBtn2" class="btn btn--secondary" aria-label="Открыть карту">📍 Открыть карту</button>
+              <button id="copyAddr" class="btn btn--ghost" aria-label="Скопировать адрес">Скопировать адрес</button>
+              <span id="copyMsg" class="copy-msg" role="status" aria-live="polite"></span>
             </div>
         </article>
 
@@ -80,6 +148,7 @@
 
     <section id="schedule">
         <h2 class="section-title">Программа</h2>
+        <div class="banner">Важно: будет только роспись, без празднования после.</div>
         <div class="timeline" id="timeline">
             <div class="t-item">
               <div class="t-time" id="tStart"></div>
