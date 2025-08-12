@@ -6,13 +6,13 @@ Design tokens derived from reference “Эко”.
 
 | Token | Value | Usage |
 |-------|-------|-------|
-| `--bg-primary` | `#f7f6f2` | основной фон |
-| `--bg-secondary` | `#efede8` | вторичный фон и карточки |
+| `--bg-primary` | `#ffffff` | основной фон |
+| `--bg-secondary` | `#ffffff` | вторичный фон (совпадает с основным) |
 | `--text-primary` | `#3f3f3c` | основной текст |
 | `--text-secondary` | `#6b6b66` | второстепенный текст |
 | `--accent-1` | `#8a9d91` | зелёный акцент, основные кнопки |
 | `--accent-2` | `#d4a373` | тёплый акцент |
-| `--muted` | `#e5e2da` | приглушённые элементы |
+| `--muted` | `#ffffff` | приглушённые элементы |
 | `--border` | `#d2cec5` | границы и контуры |
 | `--surface` | `#ffffff` | поверхности |
 | `--shadow` | `0 8px 24px rgba(0,0,0,.06)` | тени |
