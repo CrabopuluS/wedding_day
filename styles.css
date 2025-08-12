@@ -387,7 +387,7 @@ header.scrolled {
     gap: var(--space-2);
   }
 .hero .subtitle {
-  font-size: clamp(14px, 1.95vw, 14.5px);
+  font-size: clamp(14px, 1.95vw, 15px);
   margin-top: 0;
 }
 .hero-date {
