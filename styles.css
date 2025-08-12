@@ -11,6 +11,16 @@
   --secondary-hover: #3e5b3a;
   --border: #5c4b39;
   --surface: #e8e5e0;
+  --bg: #8ca3b5;
+  --bg-muted: #cbb17f;
+  --text: #1b1a19;
+  --text-2: #5c4b39;
+  --wood: #a8773b;
+  --wood-600: #8e6a4a;
+  --sage: #3e5b3a;
+  --denim: #6d7c5e;
+  --border: #5c4b39;
+  --white: #cbb17f;
   --shadow: rgba(27, 26, 25, 0.08);
   --radius: 16px;
   --gap: 24px;
@@ -539,6 +549,7 @@ img {
 }
 #schedule .card {
   background: linear-gradient(135deg, var(--surface), var(--bg));
+  background: linear-gradient(135deg, var(--white), var(--bg));
 }
 .nav a {
   color: var(--text-2);
