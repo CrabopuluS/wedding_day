@@ -413,6 +413,11 @@ header.scrolled {
   height: auto;
 }
 
+#calendar {
+  min-height: auto;
+  padding: clamp(32px, 4vw, 48px) var(--space-3);
+}
+
 .calendar-table {
   width: 100%;
   max-width: 400px;
