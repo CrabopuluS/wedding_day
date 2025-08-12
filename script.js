@@ -1,15 +1,17 @@
      // === НАСТРОЙКИ ШАБЛОНА ===
      const WEDDING = {
-       couple: 'Руслан & Елизавета',
+       couple: 'Елизавета и Руслан',
+       invite: 'Мы начинаем новую главу нашей истории и будем счастливы, если вы станете её частью.',
        dateISO: '2025-08-30',
+       dateHero: '30/08/2025',
        timeMain: '15:00',
        timeStart: '13:50',
        timeCeremony: '14:30',
        timezone: 'Europe/Moscow',
        timeEnd: '16:00',
-      venueName: 'Москоу‑Сити, башня ОКО — ресторан «Birds»',
+      venueName: 'Москва-сити, Башня ОКО, 84 этаж 354, ресторан «Birds»',
       address: '1-й Красногвардейский пр-д, 21 стр. 2, 84 этаж',
-      mapsUrl: 'https://yandex.ru/maps/?text=Москоу-сити%20башня%20ОКО%20Birds%2084%20этаж'
+      mapsUrl: ''
     };
 
       const WISHLIST = [
@@ -55,7 +57,7 @@
         return res.json();
       }
       // === УТИЛИТЫ ДАТ/ФОРМАТОВ ===
-    const dt = new Date(WEDDING.dateISO + 'T' + (WEDDING.timeStart || '12:00'));
+    const dt = new Date(`${WEDDING.dateISO}T${WEDDING.timeStart || '12:00'}:00+03:00`);
 
     function updateMetaUrls() {
       const url = window.location.href.split('#')[0];
@@ -74,9 +76,11 @@
     function hydrateBasics() {
       document.getElementById('coupleNames').textContent = WEDDING.couple;
       document.getElementById('footerNames').textContent = WEDDING.couple;
+      const inviteEl = document.getElementById('heroInvite');
+      if (inviteEl) inviteEl.textContent = WEDDING.invite;
       document.getElementById('dateText').textContent = dt.toLocaleDateString('ru-RU');
       const dateHero = document.getElementById('dateTextHero');
-      if (dateHero) dateHero.textContent = dt.toLocaleDateString('ru-RU');
+      if (dateHero) dateHero.textContent = WEDDING.dateHero || dt.toLocaleDateString('ru-RU');
       document.getElementById('mainTime').textContent = WEDDING.timeMain;
       document.getElementById('startTime').textContent = WEDDING.timeStart;
       document.getElementById('ceremonyTime').textContent = WEDDING.timeCeremony;
@@ -97,10 +101,10 @@
     function startCountdown() {
       const el = document.getElementById('countdown');
       if (!el) return;
-      const target = new Date(WEDDING.dateISO + 'T' + WEDDING.timeMain);
+      const target = new Date(`${WEDDING.dateISO}T${WEDDING.timeMain}:00+03:00`);
       function update() {
         const diff = target - new Date();
-        if (diff <= 0) { el.textContent = 'Уже сегодня!'; clearInterval(timer); return; }
+        if (diff <= 0) { el.textContent = ''; el.style.display = 'none'; clearInterval(timer); return; }
         const d = Math.floor(diff / 86400000);
         const h = Math.floor(diff % 86400000 / 3600000);
         const m = Math.floor(diff % 3600000 / 60000);
@@ -114,10 +118,14 @@
     function downloadICS() {
       const tz = WEDDING.timezone || 'Europe/Moscow';
       const compact = (s) => s.replace(/[-:]/g, '');
+      const escape = (s) => s.replace(/,/g, '\\,').replace(/;/g, '\\;');
       const start = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeMain)}00`;
       const end = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeEnd)}00`;
       const nowUTC = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+Z/, 'Z');
-      const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Wedding//Invitation//RU\nX-WR-TIMEZONE:${tz}\nBEGIN:VEVENT\nUID:${Date.now()}@wedding\nDTSTAMP:${nowUTC}\nDTSTART;TZID=${tz}:${start}\nDTEND;TZID=${tz}:${end}\nSUMMARY:Свадьба — ${WEDDING.couple}\nLOCATION:${WEDDING.venueName}, ${WEDDING.address}\nEND:VEVENT\nEND:VCALENDAR`;
+      const summary = escape(`Свадьба: ${WEDDING.couple}`);
+      const location = escape(`${WEDDING.venueName}, ${WEDDING.address}`);
+      const description = escape(WEDDING.invite);
+      const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Wedding//Invitation//RU\nX-WR-TIMEZONE:${tz}\nBEGIN:VEVENT\nUID:${Date.now()}@wedding\nDTSTAMP:${nowUTC}\nDTSTART;TZID=${tz}:${start}\nDTEND;TZID=${tz}:${end}\nSUMMARY:${summary}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
       const blob = new Blob([ics], { type: 'text/calendar' });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(blob);
@@ -139,6 +147,17 @@
 
     function openMap() {
       window.open(mapUrl(), '_blank', 'noopener');
+    }
+
+    function copyAddress() {
+      const full = `${WEDDING.venueName}, ${WEDDING.address}`;
+      navigator.clipboard.writeText(full).then(() => {
+        const msg = document.getElementById('copyMsg');
+        if (msg) {
+          msg.textContent = 'Адрес скопирован';
+          setTimeout(() => { msg.textContent = ''; }, 3000);
+        }
+      });
     }
 
 
@@ -291,6 +310,7 @@
 
     document.getElementById('heroIcs').addEventListener('click', downloadICS);
     document.getElementById('mapBtn2').addEventListener('click', openMap);
+    document.getElementById('copyAddr').addEventListener('click', copyAddress);
       onlyFree.addEventListener('change', () => {
         localStorage.setItem('onlyFree', onlyFree.checked ? '1' : '0');
         renderWishlist();

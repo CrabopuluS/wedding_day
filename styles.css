@@ -402,6 +402,13 @@ header.scrolled {
   margin-bottom: calc(var(--gap) * 2);
   text-shadow: 0 2px 4px rgba(0,0,0,.5);
 }
+.hero-date {
+  color: var(--white);
+  font-family: var(--font-date);
+  font-size: clamp(24px, 3.9vw, 33px);
+  text-shadow: 0 2px 4px rgba(0,0,0,.5);
+  margin-bottom: calc(var(--gap) * 2);
+}
 .hero .names,
 .hero .couple-names {
   color: var(--white);
@@ -410,6 +417,40 @@ header.scrolled {
 }
 .hero > * {
   position: relative;
+}
+
+.calendar-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: var(--font-date);
+}
+.calendar-table caption {
+  font-weight: 700;
+  margin-bottom: var(--space-2);
+  text-align: center;
+}
+.calendar-table th,
+.calendar-table td {
+  text-align: center;
+  padding: 0.25rem;
+}
+.calendar-table td span.day {
+  display: inline-flex;
+  width: 2.2rem;
+  height: 2.2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.calendar-table .day--selected {
+  background: var(--accent-2);
+  color: var(--white);
+}
+@media (max-width: 480px) {
+  .calendar-table th,
+  .calendar-table td {
+    font-size: var(--fs-14);
+  }
 }
 
 section {
@@ -748,6 +789,10 @@ dialog menu {
   gap: calc(var(--gap) / 2);
   flex-wrap: wrap;
   align-items: center;
+}
+.copy-msg {
+  font-size: var(--fs-14);
+  color: var(--text-secondary);
 }
 .rsvp-actions {
   display: flex;
