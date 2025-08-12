@@ -360,25 +360,24 @@ header.scrolled {
 .spacer {
   flex: 1;
 }
-.hero {
-  position: relative;
-  overflow: hidden;
-  min-height: 100vh;
-  padding: var(--gap) 0;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.hero::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url("image/background.jpg") center/cover no-repeat;
-  filter: blur(3px);
-  transform: scale(1.1);
-  z-index: -2;
-}
+  .hero {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    padding: var(--gap) 0;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: url("image/background.jpg") center/cover no-repeat;
+    z-index: -2;
+  }
 .hero::after {
   content: "";
   position: absolute;
@@ -403,15 +402,6 @@ header.scrolled {
   position: relative;
 }
 
-.hero-content {
-  background: rgba(250, 244, 239, 0.8);
-  padding: calc(var(--gap) * 1.5);
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
-  display: inline-flex;
-  flex-direction: column;
-  align-items: center;
-}
 section {
   padding: clamp(64px, 8vw, 96px) 0;
   scroll-margin-top: 80px;
@@ -627,35 +617,6 @@ img {
   gap: calc(var(--gap) / 3);
   align-items: center;
   margin-bottom: calc(var(--gap) / 1.5);
-}
-.chip {
-  display: inline-flex;
-  align-items: center;
-  gap: calc(var(--gap) / 3);
-  padding: calc(var(--gap) / 3) calc(var(--gap) / 1.5);
-  border-radius: 999px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  color: var(--text-2);
-  box-shadow: var(--shadow);
-}
-#dateChip {
-  background: var(--accent);
-  color: var(--text-dark);
-  font-family: "Playfair Display", serif;
-  font-weight: 600;
-  position: absolute;
-  top: var(--gap);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-}
-.cta {
-  display: flex;
-  justify-content: center;
-  gap: var(--gap);
-  flex-wrap: wrap;
-  margin-top: var(--gap);
 }
 .section-note {
   margin-bottom: var(--gap);

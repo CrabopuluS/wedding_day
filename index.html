@@ -31,35 +31,26 @@
           <span></span>
           <span></span>
         </button>
-        <div class="nav__links" id="navLinks">
+      <div class="nav__links" id="navLinks">
           <a href="#details">Детали</a>
           <a href="#schedule">Программа</a>
           <a href="#rsvp">Я буду</a>
           <a href="#wishlist">Подарки</a>
           <span class="spacer"></span>
           <button id="heroIcs" class="btn btn--primary">Добавить в календарь</button>
-          <button id="heroMap" class="btn btn--ghost">Как добраться</button>
         </div>
       </div>
     </nav>
   </header>
- 
-   <main>
+
+  <main>
     <section class="hero">
-      <div id="dateChip" class="chip"></div>
-      <div class="hero-content">
-        <h1 class="couple-names" id="coupleNames"></h1>
-        <p class="subtitle">Ждём вас <span id="dateTextHero"></span></p>
-        <div id="countdown" class="countdown"></div>
-        <div class="cta">
-          <button id="icsBtn" class="btn btn--primary">Добавить в календарь</button>
-          <button id="mapBtn" class="btn btn--ghost">Как добраться</button>
-        </div>
-      </div>
+      <h1 class="couple-names" id="coupleNames"></h1>
+      <p class="subtitle">Ждём вас <span id="dateTextHero"></span></p>
     </section>
- 
-     <section id="details">
-       <div class="container">
+
+    <section id="details">
+      <div class="container">
         <h2 class="section-title">Детали события</h2>
         <p class="section-note section-note--warning"><strong>Приходите чуть заранее.</strong> ⚠️ Вход строго по пропускам — <strong>не опаздывайте.</strong></p>
 
@@ -69,6 +60,7 @@
             <p><strong id="dateText"></strong> в <strong id="mainTime"></strong></p>
             <p>Сбор гостей — <strong id="startTime"></strong>, торжественная часть — <strong id="ceremonyTime"></strong>
             </p>
+            <div id="countdown" class="countdown"></div>
           </article>
 
           <article class="card details-card" aria-labelledby="whereTitle">
