@@ -141,10 +141,6 @@
       window.open(mapUrl(), '_blank', 'noopener');
     }
 
-    async function copyAddress() {
-      await navigator.clipboard.writeText(`${WEDDING.venueName}, ${WEDDING.address}`);
-      alert('Адрес скопирован');
-    }
 
       // === ВИШ-ЛИСТ ===
       const grid = document.getElementById('wishGrid');
@@ -286,7 +282,6 @@
 
     document.getElementById('heroIcs').addEventListener('click', downloadICS);
     document.getElementById('mapBtn2').addEventListener('click', openMap);
-      document.getElementById('copyAddr').addEventListener('click', copyAddress);
       onlyFree.addEventListener('change', () => {
         localStorage.setItem('onlyFree', onlyFree.checked ? '1' : '0');
         renderWishlist();
