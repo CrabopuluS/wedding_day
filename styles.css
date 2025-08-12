@@ -1,18 +1,15 @@
 :root {
-  --bg: #FAF4EF;
-  --bg-muted: #FFF8F0;
-  --text: #8B6F5A;
-  --text-2: #A68A75;
-  --text: #A68A75;
-  --text-2: #CBB39E;
-  --wood: #D9A066;
-  --wood-600: #A68A75;
-  --sage: #E6C8A5;
-  --denim: #D9A066;
-  --border: #EBD9C3;
-  --white: #FDFDFB;
-  --shadow: rgba(139, 111, 90, 0.08);
-  --shadow: rgba(166, 138, 117, 0.08);
+  --bg: #8ca3b5;
+  --bg-muted: #cbb17f;
+  --text: #1b1a19;
+  --text-2: #5c4b39;
+  --wood: #a8773b;
+  --wood-600: #8e6a4a;
+  --sage: #3e5b3a;
+  --denim: #6d7c5e;
+  --border: #5c4b39;
+  --white: #cbb17f;
+  --shadow: rgba(27, 26, 25, 0.08);
   --radius: 16px;
   --gap: 24px;
   --speed: 0.3s;
@@ -538,7 +535,7 @@ img {
   color: var(--wood);
 }
 #schedule .card {
-  background: linear-gradient(135deg, var(--white), #EBD9C3);
+  background: linear-gradient(135deg, var(--white), var(--bg));
 }
 .nav a {
   color: var(--text-2);
