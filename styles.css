@@ -1,4 +1,16 @@
 :root {
+  --bg: #1b1a19;
+  --bg-alt: #3e5b3a;
+  --bg-muted: #8ca3b5;
+  --text: #cbb17f;
+  --text-2: #6d7c5e;
+  --text-dark: #1b1a19;
+  --accent: #a8773b;
+  --accent-hover: #8e6a4a;
+  --secondary: #6d7c5e;
+  --secondary-hover: #3e5b3a;
+  --border: #5c4b39;
+  --surface: #e8e5e0;
   --bg: #8ca3b5;
   --bg-muted: #cbb17f;
   --text: #1b1a19;
@@ -85,11 +97,12 @@ h2 {
   justify-content: center;
 }
 .card {
-  background: var(--white);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: 0 6px 20px var(--shadow);
   padding: clamp(16px, 4vw, 32px);
+  color: var(--text-dark);
 }
 .details-card {
   display: flex;
@@ -111,14 +124,14 @@ h2 {
   cursor: pointer;
 }
 .btn--primary {
-  background: var(--wood);
-  color: var(--white);
-  border-color: var(--wood);
+  background: var(--accent);
+  color: var(--text-dark);
+  border-color: var(--accent);
 }
 .btn--primary:hover,
 .btn--primary:focus-visible {
-  background: var(--wood-600);
-  border-color: var(--wood-600);
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
   transform: translateY(-1px);
 }
 .btn--primary:disabled {
@@ -130,23 +143,23 @@ h2 {
 }
 .btn--ghost {
   background: transparent;
-  color: var(--wood-600);
-  border-color: var(--wood);
+  color: var(--accent-hover);
+  border-color: var(--accent);
 }
 .btn--ghost:hover,
 .btn--ghost:focus-visible {
-  background: var(--wood);
-  color: var(--white);
+  background: var(--accent);
+  color: var(--text-dark);
 }
 .btn--secondary {
   background: transparent;
-  color: var(--sage);
-  border-color: var(--sage);
+  color: var(--secondary);
+  border-color: var(--secondary);
 }
 .btn--secondary:hover,
 .btn--secondary:focus-visible {
-  background: var(--sage);
-  color: var(--white);
+  background: var(--secondary-hover);
+  color: var(--text);
 }
 .btn--icon {
   width: 2.5rem;
@@ -166,21 +179,21 @@ a:focus-visible {
   text-decoration: underline;
   text-underline-offset: 2px;
   text-decoration-thickness: 1px;
-  text-decoration-color: var(--denim);
+  text-decoration-color: var(--bg-muted);
 }
 .btn:focus-visible {
-  outline: 3px solid var(--denim);
+  outline: 3px solid var(--bg-muted);
   outline-offset: 2px;
 }
 a:focus-visible {
-  outline: 3px solid var(--denim);
+  outline: 3px solid var(--bg-muted);
   outline-offset: 2px;
 }
 header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(250, 244, 239, 0.8);
+  background: rgba(27, 26, 25, 0.8);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
 }
@@ -242,7 +255,7 @@ header.scrolled {
   display: block;
   height: 3px;
   width: 28px;
-  background: var(--wood);
+  background: var(--accent);
   transition:
     transform var(--speed) ease,
     opacity var(--speed) ease;
@@ -350,7 +363,7 @@ section {
   scroll-margin-top: 80px;
 } /* под реальную высоту header */
 main > section:nth-of-type(2n) {
-  background: var(--bg-muted);
+  background: var(--bg-alt);
 }
 main > section:nth-of-type(2n + 1):not(.hero) {
   background: var(--bg);
@@ -358,7 +371,7 @@ main > section:nth-of-type(2n + 1):not(.hero) {
 }
 main > section:nth-of-type(2n + 1):not(.hero) .card,
 main > section:nth-of-type(2n + 1):not(.hero) .wish-card {
-  color: var(--text);
+  color: var(--text-dark);
 }
 footer {
   padding: 48px 0;
@@ -375,12 +388,12 @@ textarea {
   padding: 12px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  background: var(--white);
-  color: var(--text);
+  background: var(--surface);
+  color: var(--text-dark);
 }
 input:focus-visible,
 textarea:focus-visible {
-  outline: 2px solid var(--sage);
+  outline: 2px solid var(--secondary);
 }
 [data-reveal] {
   opacity: 0;
@@ -418,7 +431,7 @@ img {
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 16px;
-  background: var(--white);
+  background: var(--surface);
   box-shadow: 0 6px 20px var(--shadow);
   transition: transform var(--speed) ease;
 }
@@ -484,9 +497,9 @@ img {
   font-weight: 600;
 }
 .badge.reserved {
-  background: var(--sage);
-  color: var(--wood-600);
-  border: 1px dashed var(--wood-600);
+  background: var(--secondary-hover);
+  color: var(--accent-hover);
+  border: 1px dashed var(--accent-hover);
 }
 .badge.free {
   background: var(--bg-muted);
@@ -519,7 +532,7 @@ img {
   width: var(--icon-size);
   height: var(--icon-size);
   border-radius: 50%;
-  border: 2px solid var(--wood);
+  border: 2px solid var(--accent);
   background: var(--bg);
   display: flex;
   align-items: center;
@@ -532,9 +545,10 @@ img {
 .t-time {
   font-weight: 700;
   align-self: center;
-  color: var(--wood);
+  color: var(--accent);
 }
 #schedule .card {
+  background: linear-gradient(135deg, var(--surface), var(--bg));
   background: linear-gradient(135deg, var(--white), var(--bg));
 }
 .nav a {
@@ -566,14 +580,14 @@ img {
   gap: calc(var(--gap) / 3);
   padding: calc(var(--gap) / 3) calc(var(--gap) / 1.5);
   border-radius: 999px;
-  background: var(--white);
+  background: var(--surface);
   border: 1px solid var(--border);
   color: var(--text-2);
   box-shadow: 0 6px 20px var(--shadow);
 }
 #dateChip {
-  background: var(--wood);
-  color: var(--white);
+  background: var(--accent);
+  color: var(--text-dark);
   font-family: "Playfair Display", serif;
   font-weight: 600;
   position: absolute;
@@ -595,7 +609,7 @@ img {
 }
 .section-note--warning {
   background: var(--bg-muted);
-  color: var(--wood-600);
+  color: var(--accent-hover);
   font-weight: 600;
   padding: calc(var(--gap) / 2);
   border-radius: var(--radius);
@@ -607,7 +621,7 @@ main > section:nth-of-type(2n + 1):not(.hero) .section-note {
   padding: calc(var(--gap) / 2);
   border-radius: var(--radius);
   background: var(--bg-muted);
-  color: var(--wood-600);
+  color: var(--accent-hover);
   text-align: center;
   margin-bottom: calc(var(--gap) / 1.5);
 }
@@ -638,7 +652,7 @@ dialog menu {
   display: none;
 }
 .modal-fallback form {
-  background: var(--white);
+  background: var(--surface);
   border-radius: var(--radius);
   padding: 24px;
   max-width: 400px;
@@ -661,7 +675,7 @@ dialog menu {
   width: auto;
   height: auto;
   padding: 8px 12px;
-  background: var(--white);
+  background: var(--surface);
   border-radius: 6px;
 }
 .skeleton {
