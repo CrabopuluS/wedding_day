@@ -55,12 +55,7 @@
         return res.json();
       }
       // === УТИЛИТЫ ДАТ/ФОРМАТОВ ===
-const dt = new Date(WEDDING.dateISO + 'T' + (WEDDING.timeStart || '12:00'));
-const prettyDate = (d) => new Intl.DateTimeFormat('ru-RU', {
-  day: 'numeric',
-  month: 'long',
-  year: 'numeric'
-}).format(d);
+    const dt = new Date(WEDDING.dateISO + 'T' + (WEDDING.timeStart || '12:00'));
 
     function updateMetaUrls() {
       const url = window.location.href.split('#')[0];
@@ -79,7 +74,6 @@ const prettyDate = (d) => new Intl.DateTimeFormat('ru-RU', {
     function hydrateBasics() {
       document.getElementById('coupleNames').textContent = WEDDING.couple;
       document.getElementById('footerNames').textContent = WEDDING.couple;
-      document.getElementById('dateChip').textContent = prettyDate(dt);
       document.getElementById('dateText').textContent = dt.toLocaleDateString('ru-RU');
       const dateHero = document.getElementById('dateTextHero');
       if (dateHero) dateHero.textContent = dt.toLocaleDateString('ru-RU');
@@ -290,11 +284,8 @@ const prettyDate = (d) => new Intl.DateTimeFormat('ru-RU', {
       observer.observe(timelineEl);
     }
 
-    document.getElementById('icsBtn').addEventListener('click', downloadICS);
     document.getElementById('heroIcs').addEventListener('click', downloadICS);
-    document.getElementById('mapBtn').addEventListener('click', openMap);
-    document.getElementById('heroMap').addEventListener('click', openMap);
-      document.getElementById('mapBtn2').addEventListener('click', openMap);
+    document.getElementById('mapBtn2').addEventListener('click', openMap);
       document.getElementById('copyAddr').addEventListener('click', copyAddress);
       onlyFree.addEventListener('change', () => {
         localStorage.setItem('onlyFree', onlyFree.checked ? '1' : '0');
