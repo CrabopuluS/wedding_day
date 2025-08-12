@@ -20,8 +20,9 @@ Design tokens derived from reference “Эко”.
 ## Typography
 
 - Гарнитуры:
-  - Заголовки: `Playfair Display`, `Cormorant Garamond`, serif.
-  - Текст: `Inter`, sans-serif.
+  - Заголовки: `Great Vibes`, cursive.
+  - Текст: `Playfair Display`, serif.
+  - Даты: `Cinzel`, serif.
 - Масштаб (rem): `0.75`, `0.875`, `1`, `1.25`, `1.5`, `2`, `2.5`, `3.5`  (соответствует 12–56 px).
 - Межстрочный интервал: 1.5 для текста, 1.2 для заголовков.
 - Трекинг для крупных заголовков: `-0.02em`.

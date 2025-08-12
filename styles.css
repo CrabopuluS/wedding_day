@@ -13,8 +13,9 @@
   --shadow: 0 8px 24px rgba(0,0,0,.06);
 
   /* Типографика */
-  --font-serif: "Playfair Display", "Cormorant Garamond", ui-serif, serif;
-  --font-sans: "Inter", "SF Pro Text", ui-sans-serif, system-ui, sans-serif;
+  --font-heading: "Great Vibes", cursive;
+  --font-body: "Playfair Display", "Cormorant Garamond", ui-serif, serif;
+  --font-date: "Cinzel", serif;
 
   /* Шкала размеров (rem) */
   --fs-12: .75rem;
@@ -81,7 +82,7 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-family: var(--font-sans);
+  font-family: var(--font-body);
   line-height: 1.5;
   background: var(--bg-primary);
   color: var(--text-primary);
@@ -96,7 +97,7 @@ h1,
 h2,
 h3,
 h4 {
-  font-family: var(--font-serif);
+  font-family: var(--font-heading);
   color: var(--text-primary);
 }
 h1 {
@@ -124,12 +125,22 @@ h3 {
 }
 .names,
 .couple-names {
-  font-family: "Great Vibes", cursive;
+  font-family: var(--font-heading);
   font-size: var(--font-display);
   line-height: 1.1;
   letter-spacing: 0.5px;
   color: var(--text-primary);
   margin-bottom: 0.5rem;
+}
+
+#dateText,
+#dateTextHero,
+#mainTime,
+#startTime,
+#ceremonyTime,
+.t-time,
+#countdown {
+  font-family: var(--font-date);
 }
 .container {
   max-width: 1200px;
@@ -280,11 +291,11 @@ header.scrolled {
       transform var(--dur-mid) var(--easing),
       opacity var(--dur-mid) var(--easing);
   }
-.brand {
-  font-family: "Playfair Display", serif;
-  font-weight: 700;
-  letter-spacing: 0.3px;
-}
+  .brand {
+    font-family: var(--font-body);
+    font-weight: 700;
+    letter-spacing: 0.3px;
+  }
 .brand a {
   text-decoration: none;
   color: inherit;
