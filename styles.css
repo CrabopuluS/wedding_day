@@ -1,30 +1,44 @@
+/* Design tokens inspired by "Time — Лавли" */
 :root {
-  --bg: #1b1a19;
-  --bg-alt: #3e5b3a;
-  --bg-muted: #8ca3b5;
-  --text: #cbb17f;
-  --text-2: #6d7c5e;
-  --text-dark: #1b1a19;
-  --accent: #a8773b;
-  --accent-hover: #8e6a4a;
-  --secondary: #6d7c5e;
-  --secondary-hover: #3e5b3a;
-  --border: #5c4b39;
-  --surface: #e8e5e0;
-  --bg: #8ca3b5;
-  --bg-muted: #cbb17f;
-  --text: #1b1a19;
-  --text-2: #5c4b39;
-  --wood: #a8773b;
-  --wood-600: #8e6a4a;
-  --sage: #3e5b3a;
-  --denim: #6d7c5e;
-  --border: #5c4b39;
-  --white: #cbb17f;
-  --shadow: rgba(27, 26, 25, 0.08);
-  --radius: 16px;
-  --gap: 24px;
-  --speed: 0.3s;
+  /* palette */
+  --bg-primary: #fafaf0;
+  --bg-secondary: #ffffff;
+  --text-primary: #272727;
+  --text-secondary: #555555;
+  --accent-1: #ff8562;
+  --accent-2: #0096ff;
+  --muted: #c7d2e9;
+  --border: #c7d2e9;
+  --surface: #ffffff;
+  --shadow: rgba(0, 0, 0, 0.1);
+
+  /* typography scale (rem) */
+  --font-xs: 0.75rem;   /* 12px */
+  --font-sm: 0.875rem;  /* 14px */
+  --font-base: 1rem;    /* 16px */
+  --font-md: 1.25rem;   /* 20px */
+  --font-lg: 1.5rem;    /* 24px */
+  --font-xl: 2rem;      /* 32px */
+  --font-xxl: 2.5rem;   /* 40px */
+  --font-display: 3.5rem; /* 56px */
+
+  /* radius & spacing */
+  --radius: 1rem;
+  --gap: 1.5rem;
+  --speed: 0.2s;
+
+  /* legacy aliases for existing selectors */
+  --bg: var(--bg-primary);
+  --bg-alt: var(--bg-secondary);
+  --bg-muted: var(--muted);
+  --text: var(--text-primary);
+  --text-2: var(--text-secondary);
+  --text-dark: var(--text-primary);
+  --accent: var(--accent-1);
+  --accent-hover: #e06b45;
+  --secondary: var(--accent-2);
+  --secondary-hover: #007ad1;
+  --white: var(--bg-secondary);
 }
 * {
   box-sizing: border-box;
@@ -36,15 +50,14 @@ html {
 }
 body {
   font-family: "Inter", sans-serif;
-  letter-spacing: 0.2px;
-  line-height: 1.6;
-  background: var(--bg);
-  color: var(--text);
-  font-size: 16px;
+  line-height: 1.5;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  font-size: var(--font-base);
 }
 @media (min-width: 768px) {
   body {
-    font-size: 18px;
+    font-size: var(--font-md);
   }
 }
 h1,
@@ -52,40 +65,44 @@ h2,
 h3,
 h4 {
   font-family: "Playfair Display", serif;
-  color: var(--text-2);
+  color: var(--text-primary);
 }
 h1 {
-  font-size: clamp(40px, 8vw, 96px);
+  font-size: var(--font-display);
   line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 h2 {
-  font-size: clamp(28px, 4vw, 44px);
-  margin-bottom: 16px;
+  font-size: var(--font-xxl);
+  margin-bottom: 1rem;
+}
+h3 {
+  font-size: var(--font-xl);
 }
 .lead {
-  font-size: 18px;
+  font-size: var(--font-md);
 }
 @media (min-width: 768px) {
   .lead {
-    font-size: 20px;
+    font-size: var(--font-lg);
   }
 }
 .muted {
-  color: var(--text-2);
+  color: var(--text-secondary);
 }
 .names,
 .couple-names {
   font-family: "Great Vibes", cursive;
-  font-size: clamp(40px, 8vw, 96px);
+  font-size: var(--font-display);
   line-height: 1.1;
   letter-spacing: 0.5px;
-  color: var(--text-2);
-  margin-bottom: 8px;
+  color: var(--text-primary);
+  margin-bottom: 0.5rem;
 }
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: clamp(16px, 4vw, 32px);
+  padding: 0 1.5rem;
 }
 .container p {
   max-width: 65ch;
@@ -193,7 +210,7 @@ header {
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(27, 26, 25, 0.8);
+  background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--border);
 }
@@ -202,6 +219,8 @@ header.scrolled {
 }
 .nav {
   position: relative;
+}
+.nav__inner {
   display: flex;
   align-items: center;
   gap: calc(var(--gap) * 2 / 3);
@@ -213,7 +232,7 @@ header.scrolled {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  background: var(--bg);
+  background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: 0 6px 20px var(--shadow);
