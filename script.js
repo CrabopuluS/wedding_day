@@ -1,5 +1,3 @@
-// Changelog: упрощено управление меню, убрано вычисление высоты hero
-
      // === НАСТРОЙКИ ШАБЛОНА ===
      const WEDDING = {
        couple: 'Елизавета и Руслан',
@@ -377,3 +375,13 @@ const burger=document.getElementById('burger');
 burger?.addEventListener('click',()=>{const opened=nav.classList.toggle('open');burger.setAttribute('aria-expanded',opened?'true':'false');});
 navLinks.forEach(l=>l.addEventListener('click',()=>{nav.classList.remove('open');burger.setAttribute('aria-expanded','false');}));
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){nav.classList.remove('open');burger.setAttribute('aria-expanded','false');}});
+
+function setHeroHeight(){
+  const hero=document.querySelector('.hero');
+  const header=document.querySelector('header');
+  if(hero&&header){
+    hero.style.minHeight=`calc(100vh - ${header.offsetHeight}px)`;
+  }
+}
+window.addEventListener('load',setHeroHeight);
+window.addEventListener('resize',setHeroHeight);

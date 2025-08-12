@@ -1,4 +1,3 @@
-<!-- Changelog: добавлены контейнеры, адаптивный hero и ленивые изображения -->
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -25,7 +24,7 @@
  <body id="top">
   <header>
     <nav class="nav">
-      <div class="nav__inner container">
+      <div class="nav__inner">
         <span class="brand"><a href="#top">Приглашение</a></span>
         <button class="burger" id="burger" aria-label="Меню" aria-controls="navLinks" aria-expanded="false">
           <span></span>
@@ -46,22 +45,15 @@
 
   <main>
     <section class="hero">
-      <picture class="hero-photo">
-        <source srcset="image/background.jpg" media="(min-width: 1280px)" />
-        <source srcset="image/background.jpg" media="(min-width: 768px)" />
-        <img src="image/background.jpg" alt="Фото пары" width="731" height="864" />
-      </picture>
-      <div class="container">
-        <p class="hero-date" id="dateTextHero"></p>
-        <h1 class="couple-names" id="coupleNames"></h1>
-        <p class="subtitle" id="heroInvite"></p>
-      </div>
+      <p class="hero-date" id="dateTextHero"></p>
+      <img src="image/background.jpg" alt="Фото пары" class="hero-photo" />
+      <h1 class="couple-names" id="coupleNames"></h1>
+      <p class="subtitle" id="heroInvite"></p>
     </section>
 
-    <img src="image/Space_2.jpg" alt="" width="1024" height="683" class="section-divider" loading="lazy" />
+    <img src="image/Space_2.jpg" alt="" class="section-divider" />
 
     <section id="calendar" class="calendar-section">
-      <div class="container">
       <h2 class="section-title">Календарь</h2>
       <table class="calendar-table" aria-label="Календарь Август 2025">
         <caption>Август 2025</caption>
@@ -143,13 +135,11 @@
           <span class="label">секунд</span>
         </div>
       </div>
-      </div>
     </section>
 
-    <img src="image/Space_1.jpg" alt="" width="1024" height="443" class="section-divider" loading="lazy" />
+    <img src="image/Space_1.jpg" alt="" class="section-divider" />
 
     <section id="details">
-      <div class="container">
         <h2 class="section-title">Детали события</h2>
         <div class="grid">
           <article class="details-card" aria-labelledby="whenTitle">
@@ -177,11 +167,9 @@
             <p>Дресс‑кода нет. Но если хотите красивые фоточки — вы знаете, что делать 😉</p>
           </article>
         </div>
-      </div>
      </section>
 
     <section id="schedule">
-      <div class="container">
         <h2 class="section-title">Программа</h2>
         <div class="banner">Важно: будет только роспись, без празднования после.</div>
         <div class="timeline" id="timeline">
@@ -202,17 +190,14 @@
               <div>Конец</div>
             </div>
           </div>
-      </div>
     </section>
 
     <section id="rsvp">
-      <div class="container">
         <h2 class="section-title">Я буду</h2>
         <p class="section-note">Пожалуйста, подтвердите своё присутствие.</p>
         <div class="rsvp-actions">
           <a class="btn btn--primary" href="https://docs.google.com/forms/d/e/1FAIpQLScud1RK1XMJ5SMcujP3-J6aizMmvnCJPqhduS6tGXu5rjCoKw/viewform?usp=pp_url" target="_blank" rel="noopener">Открыть форму подтверждения</a>
         </div>
-      </div>
     </section>
 
     <section id="wishlist">
@@ -226,7 +211,7 @@
          <div id="wishError" class="banner hidden">Сервер недоступен, статусы могут быть неточны</div>
          <div class="filters">
            <label class="filter-option">
-             <img src="https://img.icons8.com/ios-glyphs/20/a8773b/filter.png" alt="" aria-hidden="true" width="20" height="20" loading="lazy" />
+             <img src="https://img.icons8.com/ios-glyphs/20/a8773b/filter.png" alt="" aria-hidden="true" />
              <input type="checkbox" id="onlyFree" />
              <span>Только свободные</span>
            </label>
