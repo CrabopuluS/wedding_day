@@ -94,6 +94,10 @@
       if (tEnd) tEnd.textContent = WEDDING.timeEnd;
       document.getElementById('venueName').textContent = WEDDING.venueName;
       document.getElementById('venueAddr').textContent = WEDDING.address;
+      const mapEmbed = document.getElementById('mapEmbed');
+      if (mapEmbed) {
+        mapEmbed.innerHTML = `<iframe src="https://maps.google.com/maps?q=${encodeURIComponent(WEDDING.address)}&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
+      }
       document.title = `Свадьба — ${WEDDING.couple}`;
       updateMetaUrls();
     }

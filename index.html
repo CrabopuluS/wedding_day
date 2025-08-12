@@ -114,6 +114,7 @@
           </tr>
         </tbody>
       </table>
+      <p class="countdown-label">До того самого дня осталось</p>
       <div id="countdown" class="countdown">
         <div class="time-part">
           <div class="digits" id="cd-days"><span class="digit">0</span><span class="digit">0</span></div>
@@ -136,14 +137,13 @@
 
     <section id="details">
         <h2 class="section-title">Детали события</h2>
-        <p class="section-note section-note--warning"><strong>Приходите чуть заранее.</strong> ⚠️ Вход строго по пропускам — <strong>не опаздывайте.</strong></p>
-
         <div class="grid">
           <article class="details-card" aria-labelledby="whenTitle">
             <h3 id="whenTitle">Когда</h3>
             <p><strong id="dateText"></strong> в <strong id="mainTime"></strong></p>
             <p>Сбор гостей — <strong id="startTime"></strong>, торжественная часть — <strong id="ceremonyTime"></strong>
             </p>
+            <p class="section-note section-note--warning"><strong>Приходите чуть заранее.</strong> ⚠️ Вход строго по пропускам — <strong>не опаздывайте.</strong></p>
           </article>
 
           <article class="details-card" aria-labelledby="whereTitle">
@@ -151,10 +151,11 @@
             <p id="venueName"></p>
             <p id="venueAddr"></p>
             <div class="address-actions">
-              <button id="mapBtn2" class="btn btn--secondary" aria-label="Открыть карту">📍 Открыть карту</button>
-              <button id="copyAddr" class="btn btn--ghost" aria-label="Скопировать адрес">Скопировать адрес</button>
+              <button id="mapBtn2" class="btn btn--secondary" aria-label="Открыть карту">Открыть карту</button>
+              <button id="copyAddr" class="btn btn--secondary" aria-label="Скопировать адрес">Скопировать адрес</button>
               <span id="copyMsg" class="copy-msg" role="status" aria-live="polite"></span>
             </div>
+            <div id="mapEmbed" class="map-widget"></div>
         </article>
 
           <article class="details-card" aria-labelledby="dressTitle">
@@ -170,22 +171,18 @@
         <div class="timeline" id="timeline">
             <div class="t-item">
               <div class="t-time" id="tStart"></div>
-                <div class="t-icon"><img src="https://img.icons8.com/ios-filled/50/a8773b/conference.png" alt="Сбор гостей"></div>
               <div>Сбор гостей</div>
             </div>
             <div class="t-item">
               <div class="t-time" id="tCeremony"></div>
-                <div class="t-icon"><img src="https://img.icons8.com/ios-filled/50/a8773b/tower.png" alt="Поднимаемся на башню"></div>
               <div>Поднимаемся на башню</div>
             </div>
             <div class="t-item">
               <div class="t-time" id="tMain"></div>
-                <div class="t-icon"><img src="https://img.icons8.com/ios-filled/50/a8773b/wedding-rings.png" alt="Церемония"></div>
               <div>Церемония</div>
             </div>
             <div class="t-item">
               <div class="t-time" id="tEnd"></div>
-                <div class="t-icon"><img src="https://img.icons8.com/ios-filled/50/a8773b/champagne.png" alt="Завершение"></div>
               <div>Конец</div>
             </div>
           </div>
