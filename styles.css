@@ -145,11 +145,18 @@ h4 {
 .container p {
   max-width: 65ch;
 }
+#wishlist .container p {
+  margin-left: auto;
+  margin-right: auto;
+}
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--gap);
   justify-content: center;
+}
+#details .grid {
+  grid-template-columns: 1fr;
 }
 .card {
   background: var(--surface);
@@ -377,15 +384,15 @@ header.scrolled {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--gap);
+    gap: var(--space-2);
   }
 .hero .subtitle {
-  font-size: clamp(24px, 3.9vw, 33px);
-  margin-top: auto;
+  font-size: clamp(12px, 1.95vw, 16.5px);
+  margin-top: 0;
 }
 .hero-date {
   font-family: var(--font-date);
-  font-size: var(--heading-size);
+  font-size: calc(var(--heading-size) / 1.5);
   margin-bottom: 0;
 }
 .hero .names,
@@ -397,7 +404,7 @@ header.scrolled {
 }
 
 .hero-photo {
-  width: clamp(200px, 60vw, 380px);
+  width: clamp(300px, 90vw, 570px);
   height: auto;
 }
 
@@ -575,10 +582,9 @@ img {
 }
 .timeline {
   --time-col: 88px;
-  --icon-size: 32px;
   position: relative;
   display: grid;
-  grid-template-columns: var(--time-col) var(--icon-size) 1fr;
+  grid-template-columns: var(--time-col) 1fr;
   row-gap: var(--gap);
   column-gap: 16px;
   padding-left: 0;
@@ -588,31 +594,29 @@ img {
   position: absolute;
   top: 0;
   bottom: 0;
-  left: calc(var(--time-col) + var(--icon-size) / 2);
+  left: var(--time-col);
   width: 2px;
   background: var(--border);
 }
 .t-item {
   display: contents;
 }
-.t-icon {
-  width: var(--icon-size);
-  height: var(--icon-size);
-  border-radius: 50%;
-  border: 2px solid var(--accent);
-  background: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.t-icon img {
-  width: 20px;
-  height: 20px;
-}
 .t-time {
   font-weight: 700;
   align-self: center;
   color: var(--accent);
+}
+#schedule,
+#rsvp {
+  min-height: auto;
+}
+#schedule {
+  padding-top: var(--space-4);
+  padding-bottom: var(--space-2);
+}
+#rsvp {
+  padding-top: var(--space-2);
+  padding-bottom: var(--space-4);
 }
 #schedule .card {
   background: linear-gradient(135deg, var(--surface), var(--bg));
@@ -779,10 +783,19 @@ dialog menu {
   gap: calc(var(--gap) / 2);
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
 }
 .copy-msg {
   font-size: var(--fs-14);
   color: var(--text-secondary);
+}
+.map-widget {
+  margin-top: var(--gap);
+}
+.map-widget iframe {
+  width: 100%;
+  height: 300px;
+  border: 0;
 }
 .rsvp-actions {
   display: flex;
@@ -790,8 +803,12 @@ dialog menu {
   flex-wrap: wrap;
   margin-top: var(--gap);
 }
+.countdown-label {
+  margin-top: calc(var(--gap) * 2);
+  margin-bottom: var(--gap);
+}
 .countdown {
-  margin-top: var(--gap);
+  margin-top: 0;
   display: flex;
   gap: var(--space-4);
 }
