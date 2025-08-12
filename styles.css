@@ -414,8 +414,10 @@ img {
 }
 .wish-card {
   display: flex;
-  gap: 16px;
+  flex-direction: column;
   align-items: center;
+  text-align: center;
+  gap: 16px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 16px;
@@ -430,15 +432,14 @@ img {
   opacity: 0.6;
 }
 .wish-thumb {
-  width: 128px;
-  height: 128px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
   border-radius: calc(var(--radius) / 2);
   background: var(--bg-muted);
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  flex-shrink: 0;
 }
 .wish-thumb img {
   max-width: 100%;
@@ -446,10 +447,36 @@ img {
   object-fit: contain;
 }
 .wish-actions {
-  margin-left: auto;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   gap: calc(var(--gap) / 3);
-  flex-wrap: wrap;
+}
+.wish-actions .btn {
+  width: 100%;
+}
+@media (min-width: 600px) {
+  .wish-card {
+    flex-direction: row;
+    text-align: left;
+    align-items: center;
+  }
+  .wish-thumb {
+    width: 128px;
+    height: 128px;
+    aspect-ratio: auto;
+    flex-shrink: 0;
+  }
+  .wish-actions {
+    width: auto;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: auto;
+  }
+  .wish-actions .btn {
+    width: auto;
+  }
 }
 .pill {
   padding: 6px 10px;
@@ -470,33 +497,45 @@ img {
   border: 1px dashed var(--text-2);
 }
 .timeline {
+  --time-col: 88px;
+  --icon-size: 32px;
+  position: relative;
   display: grid;
-  grid-template-columns: 88px 32px 1fr;
-  row-gap: 14px;
+  grid-template-columns: var(--time-col) var(--icon-size) 1fr;
+  row-gap: var(--gap);
   column-gap: 16px;
   padding-left: 0;
+}
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--time-col) + var(--icon-size) / 2);
+  width: 2px;
+  background: var(--border);
 }
 .t-item {
   display: contents;
 }
 .t-icon {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  border-radius: 50%;
+  border: 2px solid var(--wood);
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
 }
 .t-icon img {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
 }
 .t-time {
   font-weight: 700;
-  align-self: start;
+  align-self: center;
   color: var(--wood);
-}
-.timeline::before {
-  display: none;
 }
 #schedule .card {
   background: linear-gradient(135deg, var(--white), #EBD9C3);
