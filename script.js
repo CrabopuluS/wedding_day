@@ -245,8 +245,17 @@
               } else {
                 const token = getToken(id);
                 if (!token) { alert('Снять бронь можно с того же устройства, где она оформлялась, либо напишите организаторам.'); return; }
+                const btnEl = e.currentTarget;
+                btnEl.disabled = true;
+                const prevHtml = btnEl.innerHTML;
+                btnEl.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
                 const r = await apiCancel(id, token);
-                if (!r || !r.ok) { alert('Не удалось снять бронь.'); return; }
+                if (!r || !r.ok) {
+                  alert('Не удалось снять бронь.');
+                  btnEl.disabled = false;
+                  btnEl.innerHTML = prevHtml;
+                  return;
+                }
                 clearToken(id);
                 await renderWishlist();
               }
