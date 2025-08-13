@@ -656,17 +656,36 @@ img {
   margin-bottom: calc(var(--gap) / 1.5);
 }
 .filter-option {
-  display: flex;
+  position: relative;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 8px;
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
+  gap: var(--space-1);
+  padding: var(--space-1) var(--space-2);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-md);
   background: var(--surface);
+  cursor: pointer;
+  transition: background-color var(--dur-mid) var(--easing), border-color var(--dur-mid) var(--easing), color var(--dur-mid) var(--easing);
 }
-.filter-option img {
+.filter-option:hover {
+  border-color: var(--accent-1);
+}
+.filter-option input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.filter-option .filter-icon {
   width: 20px;
   height: 20px;
+}
+.filter-option:has(input:checked) {
+  background: var(--accent-1);
+  border-color: var(--accent-1);
+  color: var(--surface);
+}
+.filter-option:has(input:checked) .filter-icon {
+  stroke: currentColor;
 }
 .section-note {
   margin-bottom: var(--gap);
