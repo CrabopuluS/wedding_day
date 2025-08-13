@@ -276,6 +276,9 @@
             } catch (e2) {
               SERVER_MAP = {};
             }
+            return false;
+          }
+
           return false;
         }
 
