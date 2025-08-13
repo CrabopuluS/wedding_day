@@ -834,6 +834,12 @@ dialog menu {
 .copy-msg {
   font-size: var(--fs-14);
   color: var(--text-secondary);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.copy-msg.show {
+  opacity: 1;
 }
 .map-widget {
   margin-top: var(--gap);
