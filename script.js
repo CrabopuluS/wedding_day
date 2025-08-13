@@ -19,25 +19,79 @@
         id: 'aerogrill',
         title: 'Аэрогриль',
         link: 'https://www.wildberries.ru/catalog/252986314/detail.aspx?size=394996892',
-        image: 'image/аэрогриль.png'
+        image: 'image/presents/аэрогриль.png'
       },
       {
         id: 'tableware',
         title: 'Столовый сервиз',
         link: 'https://www.wildberries.ru/catalog/212966249/detail.aspx?size=340398755',
-        image: 'image/столовый_сервиз.png'
+        image: 'image/presents/столовый_сервиз.png'
       },
       {
         id: 'bedding1',
         title: 'Постельное бельё 1',
         link: 'https://www.wildberries.ru/catalog/275416950/detail.aspx?size=424599294',
-        image: 'image/постельное_бельё.png'
+        image: 'image/presents/постельное_бельё.png'
       },
       {
         id: 'bedding2',
         title: 'Постельное бельё 2',
         link: 'https://www.wildberries.ru/catalog/232577407/detail.aspx?size=366852213',
-        image: 'image/постельное_бельё_2.png'
+        image: 'image/presents/постельное_бельё_2.png'
+      },
+      {
+        id: 'wok_pan',
+        title: 'Сковорода "Вок"',
+        link: 'https://www.ozon.ru/product/skovoroda-vok-chugunnaya-so-semnoy-derevyannoy-ruchkoy-30-sm-dlya-vseh-vidov-plit-206721649/?at=x6tPnDD59HDVNBzNh4VRO9Dhk4mYvRU5QVv3WIPkWwGL',
+        image: 'image/presents/сковорода_вок.png'
+      },
+      {
+        id: 'alisa_midi',
+        title: 'Колонка Алиса Midi',
+        link: 'https://www.dns-shop.ru/product/e498e4397a02ed20/umnaa-kolonka-andeks-stancia-midi-cernyj/',
+        image: 'image/presents/колонка_алиса.png'
+      },
+      {
+        id: 'bosch_meat_grinder',
+        title: 'Мясорубка Bosch',
+        link: 'https://www.dns-shop.ru/product/f93d6a66afe73361/masorubka-elektriceskaa-bosch-mfw-68640-cernyj/',
+        image: 'image/presents/мясорубка.png'
+      },
+      {
+        id: 'bath_towels',
+        title: 'Полотенца банные',
+        link: 'https://www.wildberries.ru/catalog/211848970/detail.aspx?targetUrl=SG',
+        image: 'image/presents/набор_банных_полотенец.png'
+      },
+      {
+        id: 'air_purifier',
+        title: 'Очиститель воздуха',
+        link: 'https://www.dns-shop.ru/product/65c8dce4e8342ff2/ocistitel-vozduha-smartmi-air-purifier-p1-zmkqjhqp12-seryj/',
+        image: 'image/presents/очиститель_воздуха.png'
+      },
+      {
+        id: 'electric_grill',
+        title: 'Электрический гриль',
+        link: 'https://www.dns-shop.ru/product/ff7f24c6dd8f1b80/gril-dexp-mgl-2000-cernyj/',
+        image: 'image/presents/электрический_гриль.png'
+      },
+      {
+        id: 'toaster',
+        title: 'Тостер',
+        link: 'https://www.dns-shop.ru/product/563b26e85192aef8/toster-tefal-ultimate-digital-control-panel-tt3228e0-cernyj/',
+        image: 'image/presents/тостер.png'
+      },
+      {
+        id: 'cutlery_set',
+        title: 'Набор столовых приборов',
+        link: 'https://www.ozon.ru/product/nabor-stolovyh-priborov-serebro-1643902020/?at=lRt60mDy5cmBZq97hP6ZKRqtlkmP9vuv3M2X1U0z74D7',
+        image: 'image/presents/набор_столовых_приборов.png'
+      },
+      {
+        id: 'hand_blender',
+        title: 'Блендер погружной',
+        link: 'https://www.dns-shop.ru/product/41d914c74ebe3330/blender-pogruznoj-polaris-phb-1382l-silent-serebristyj/',
+        image: 'image/presents/блендер_погружной.png'
       }
       ];
       const API_URL = 'https://script.google.com/macros/s/AKfycbyyEfM9vGn4z2Dcpl-DZjyouP57T-ZmwIBMPlTQU-sA_lVWw6hm18hNbPWqeulOpu9_fg/exec';
