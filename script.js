@@ -379,6 +379,14 @@
           overlay.className = 'wish-grid__overlay';
           overlay.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
           grid.appendChild(overlay);
+          let ok = false;
+          try {
+            ok = await fetchWishes();
+          } catch (e) {
+            console.error('fetchWishes failed', e);
+          } finally {
+            overlay.remove();
+          }
           const ok = await fetchWishes();
           overlay.remove();
           if (!ok) return;
