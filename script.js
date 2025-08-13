@@ -264,7 +264,7 @@
             if (ok) {
               SERVER_MAP = reservations || {};
               errorBanner.classList.add('hidden');
-              return;
+              return true;
             }
             throw new Error('bad response');
           } catch (e) {
@@ -276,7 +276,7 @@
             } catch (e2) {
               SERVER_MAP = {};
             }
-          }
+          return false;
         }
 
       function isReserved(id) { return Boolean(SERVER_MAP[id]); }
@@ -292,8 +292,13 @@
       }
 
       async function renderWishlist() {
-        grid.innerHTML = WISHLIST.map(() => '<div class="wish-card skeleton" style="height:calc(128px + var(--gap))"></div>').join('');
-        await fetchWishes();
+        const overlay = document.createElement('div');
+        overlay.className = 'wish-grid__overlay';
+        overlay.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
+        grid.appendChild(overlay);
+        const ok = await fetchWishes();
+        overlay.remove();
+        if (!ok) return;
         grid.innerHTML = '';
         const filtered = WISHLIST.filter(item => !(onlyFree.checked && isReserved(item.id)));
         for (const item of filtered) {
