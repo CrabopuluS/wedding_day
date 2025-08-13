@@ -44,16 +44,19 @@
 
       async function apiList() {
         const res = await fetch(`${API_URL}?action=list`, { method: 'GET' });
+        if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
       }
       async function apiReserve(item_id, name) {
         const body = new URLSearchParams({ action: 'reserve', item_id, name });
         const res = await fetch(API_URL, { method: 'POST', body });
+        if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
       }
       async function apiCancel(item_id, token) {
         const body = new URLSearchParams({ action: 'cancel', item_id, token });
         const res = await fetch(API_URL, { method: 'POST', body });
+        if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
       }
       // === УТИЛИТЫ ДАТ/ФОРМАТОВ ===
@@ -130,7 +133,7 @@
     function downloadICS() {
       const tz = WEDDING.timezone || 'Europe/Moscow';
       const compact = (s) => s.replace(/[-:]/g, '');
-      const escape = (s) => s.replace(/,/g, '\\,').replace(/;/g, '\\;');
+      const escape = (s) => s.replace(/[\n,;]/g, (ch) => ({ '\n': '\\n', ',': '\\,', ';': '\\;' }[ch]));
       const start = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeMain)}00`;
       const end = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeEnd)}00`;
       const nowUTC = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+Z/, 'Z');
@@ -158,19 +161,21 @@
     }
 
     function openMap() {
-      window.open(mapUrl(), '_blank', 'noopener');
+      window.open(mapUrl(), '_blank', 'noopener,noreferrer');
     }
 
-    function copyAddress() {
-      const full = `${WEDDING.venueName}, ${WEDDING.address}`;
-      navigator.clipboard.writeText(full).then(() => {
-        const msg = document.getElementById('copyMsg');
-        if (msg) {
-          msg.textContent = 'Адрес скопирован';
-          setTimeout(() => { msg.textContent = ''; }, 3000);
-        }
-      });
-    }
+      function copyAddress() {
+        const full = `${WEDDING.venueName}, ${WEDDING.address}`;
+        navigator.clipboard.writeText(full).then(() => {
+          const msg = document.getElementById('copyMsg');
+          if (msg) {
+            msg.textContent = 'Адрес скопирован';
+            setTimeout(() => { msg.textContent = ''; }, 3000);
+          }
+        }).catch(() => {
+          alert('Не удалось скопировать адрес');
+        });
+      }
 
 
       // === ВИШ-ЛИСТ ===
@@ -258,7 +263,7 @@
               <p class="wish-note">${escapeHtml(item.note || '')} ${item.price ? '• '+escapeHtml(item.price) : ''}</p>
             </div>
             <div class="wish-actions">
-              <a class="btn btn--ghost" href="${safeLink}" target="_blank" rel="noopener">Смотреть</a>
+                <a class="btn btn--ghost" href="${safeLink}" target="_blank" rel="noopener noreferrer">Смотреть</a>
               <span class="pill badge ${reserved ? 'reserved' : 'free'}">${nameLabel}</span>
               <button class="btn btn--primary" ${btnDisabled} aria-pressed="${reserved}" data-id="${item.id}">
                 ${btnLabel}
