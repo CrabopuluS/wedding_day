@@ -280,6 +280,8 @@
             }
             return false;
           }
+
+          return false;
         }
 
       function isReserved(id) { return Boolean(SERVER_MAP[id]); }
@@ -297,6 +299,24 @@
       function buildWishlist() {
         const frag = document.createDocumentFragment();
         for (const item of WISHLIST) {
+      async function renderWishlist() {
+        const overlay = document.createElement('div');
+        overlay.className = 'wish-grid__overlay';
+        overlay.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
+        grid.appendChild(overlay);
+        const ok = await fetchWishes();
+        overlay.remove();
+        if (!ok) return;
+        grid.innerHTML = '';
+        const filtered = WISHLIST.filter(item => !(onlyFree.checked && isReserved(item.id)));
+        for (const item of filtered) {
+          const reserved = isReserved(item.id);
+          const owner = reservedName(item.id);
+          const nameLabel = reserved ? `Забронировано — ${escapeHtml(owner)}` : 'Свободно';
+          const hasToken = !!getToken(item.id);
+
+          const card = document.createElement('div');
+          card.className = 'wish-card' + (reserved ? ' wish-card--reserved' : '');
           const safeLink = /^https?:\/\//i.test(item.link || '') ? item.link : '#';
           const thumb = item.image
             ? `<img src="${item.image}" alt="${escapeHtml(item.title)}" loading="lazy" width="128" height="128">`
