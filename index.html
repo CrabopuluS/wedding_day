@@ -14,6 +14,7 @@
   <meta name="twitter:card" content="summary_large_image" />
   <link rel="canonical" href="https://crabopulus.github.io/wedding_day/" />
     <meta name="theme-color" content="#8ca3b5" />
+  <link rel="preload" as="image" href="image/background.jpg" fetchpriority="high" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Great+Vibes&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
@@ -45,7 +46,7 @@
   <main>
     <section class="hero">
       <p class="hero-date" id="dateTextHero"></p>
-      <img src="image/background.jpg" alt="Фото пары" class="hero-photo" />
+      <img src="image/background.jpg" alt="Фото пары" class="hero-photo" width="731" height="864" fetchpriority="high" loading="eager" decoding="async" />
       <h1 class="couple-names" id="coupleNames"></h1>
       <p class="subtitle" id="heroInvite"></p>
     </section>
@@ -147,7 +148,8 @@
             <p>Сбор гостей — <strong id="startTime"></strong>, торжественная часть — <strong id="ceremonyTime"></strong>
             </p>
             <p class="section-note section-note--warning"><strong>Приходите чуть заранее.</strong> ⚠️ Вход строго по пропускам — <strong>не опаздывайте.</strong></p>
-          </article>
+              <button id="detailsIcs" class="btn btn--primary">Добавить в календарь</button>
+            </article>
 
           <article class="details-card" aria-labelledby="whereTitle">
             <h3 id="whereTitle">Где?</h3>

@@ -292,6 +292,26 @@
         })[m]);
       }
 
+      function formatPrice(price) {
+        if (price == null) return '';
+        if (Array.isArray(price) && price.length === 2) {
+          const [a, b] = price;
+          return `${Number(a).toLocaleString('ru-RU')}–${Number(b).toLocaleString('ru-RU')} ₽`;
+        }
+        if (typeof price === 'string') {
+          const parts = price.split(/[-–]/).map(p => Number(p.trim()));
+          if (parts.length === 2 && !parts.some(isNaN)) {
+            return `${parts[0].toLocaleString('ru-RU')}–${parts[1].toLocaleString('ru-RU')} ₽`;
+          }
+          const num = Number(price);
+          if (!isNaN(num)) return `${num.toLocaleString('ru-RU')} ₽`;
+          return price;
+        }
+        const num = Number(price);
+        if (!isNaN(num)) return `${num.toLocaleString('ru-RU')} ₽`;
+        return String(price);
+      }
+
       async function renderWishlist() {
         grid.innerHTML = '';
         const skeletons = document.createDocumentFragment();
@@ -324,10 +344,10 @@
             <div class="wish-thumb" aria-hidden="true">${thumb}</div>
             <div class="wish-meta">
               <h4 class="wish-title" title="${escapeHtml(item.title)}">${escapeHtml(item.title)}</h4>
-              <p class="wish-note">${escapeHtml(item.note || '')} ${item.price ? '• '+escapeHtml(item.price) : ''}</p>
+              <p class="wish-note">${escapeHtml(item.note || '')}${item.price ? ' • '+escapeHtml(formatPrice(item.price)) : ''}</p>
             </div>
             <div class="wish-actions">
-                <a class="btn btn--ghost" href="${safeLink}" target="_blank" rel="noopener noreferrer">Смотреть</a>
+                <a class="btn btn--ghost" href="${safeLink}" target="_blank" rel="nofollow noopener noreferrer">Смотреть</a>
               <span class="pill badge ${reserved ? 'reserved' : 'free'}">${nameLabel}</span>
               <button class="btn btn--primary" ${btnDisabled} aria-pressed="${reserved}" data-id="${item.id}">
                 ${btnLabel}
@@ -346,14 +366,29 @@
                 const token = getToken(id);
                 if (!token) { alert('Снять бронь можно с того же устройства, где она оформлялась, либо напишите организаторам.'); return; }
                 const btnEl = e.currentTarget;
+                const cardEl = btnEl.closest('.wish-card');
+                const badgeEl = cardEl.querySelector('.badge');
+                const prevBadgeClass = badgeEl.className;
+                const prevBadgeText = badgeEl.textContent;
                 btnEl.disabled = true;
                 const prevHtml = btnEl.innerHTML;
                 btnEl.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
-                const r = await apiCancel(id, token);
+                cardEl.style.opacity = '0.5';
+                badgeEl.className = 'pill badge free';
+                badgeEl.textContent = 'Свободно';
+                let r;
+                try {
+                  r = await apiCancel(id, token);
+                } catch (err) {
+                  r = null;
+                }
                 if (!r || !r.ok) {
                   alert('Не удалось снять бронь.');
                   btnEl.disabled = false;
                   btnEl.innerHTML = prevHtml;
+                  badgeEl.className = prevBadgeClass;
+                  badgeEl.textContent = prevBadgeText;
+                  cardEl.style.opacity = '';
                   return;
                 }
                 clearToken(id);
@@ -396,6 +431,7 @@
     }
 
     document.getElementById('heroIcs').addEventListener('click', downloadICS);
+    document.getElementById('detailsIcs')?.addEventListener('click', downloadICS);
     document.getElementById('mapBtn2').addEventListener('click', openMap);
     document.getElementById('copyAddr').addEventListener('click', copyAddress);
       onlyFree.addEventListener('change', () => {
@@ -453,7 +489,15 @@ const sections=Array.from(navLinks).map(l=>document.querySelector(l.getAttribute
 const navObserver=new IntersectionObserver(entries=>{
   entries.forEach(entry=>{
     const link=document.querySelector(`.nav a[href="#${entry.target.id}"]`);
-    if(link){entry.isIntersecting?link.classList.add('is-active'):link.classList.remove('is-active');}
+    if(link){
+      if(entry.isIntersecting){
+        link.classList.add('is-active');
+        link.setAttribute('aria-current','page');
+      }else{
+        link.classList.remove('is-active');
+        link.removeAttribute('aria-current');
+      }
+    }
   });
 },{rootMargin:'-50% 0px -50% 0px'});
 sections.forEach(sec=>navObserver.observe(sec));
