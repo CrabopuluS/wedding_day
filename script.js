@@ -241,6 +241,8 @@
       const reserveName = document.getElementById('reserveName');
       const reserveCancel = document.getElementById('reserveCancel');
       let reserveItemId = null;
+      const cardRefs = new Map(); // id -> {card, btn, pill, item}
+      let emptyCard = null;
       const supportsDialog = typeof HTMLDialogElement === 'function' && typeof reserveDialog.showModal === 'function';
       function openReserveDialog(){
         supportsDialog ? reserveDialog.showModal() : reserveDialog.classList.remove('hidden');
@@ -294,6 +296,9 @@
         })[m]);
       }
 
+      function buildWishlist() {
+        const frag = document.createDocumentFragment();
+        for (const item of WISHLIST) {
       async function renderWishlist() {
         const overlay = document.createElement('div');
         overlay.className = 'wish-grid__overlay';
@@ -316,8 +321,8 @@
           const thumb = item.image
             ? `<img src="${item.image}" alt="${escapeHtml(item.title)}" loading="lazy" width="128" height="128">`
             : '🎁';
-          const btnLabel = reserved ? (hasToken ? 'Снять бронь' : 'Забронировано') : 'Забронировать';
-          const btnDisabled = reserved && !hasToken ? 'disabled' : '';
+          const card = document.createElement('div');
+          card.className = 'wish-card';
           card.innerHTML = `
             <div class="wish-thumb" aria-hidden="true">${thumb}</div>
             <div class="wish-meta">
@@ -326,52 +331,83 @@
             </div>
             <div class="wish-actions">
                 <a class="btn btn--ghost" href="${safeLink}" target="_blank" rel="noopener noreferrer">Смотреть</a>
-              <span class="pill badge ${reserved ? 'reserved' : 'free'}">${nameLabel}</span>
-              <button class="btn btn--primary" ${btnDisabled} aria-pressed="${reserved}" data-id="${item.id}">
-                ${btnLabel}
+              <span class="pill badge free">Свободно</span>
+              <button class="btn btn--primary" aria-pressed="false" data-id="${item.id}">
+                Забронировать
               </button>
             </div>`;
-
           const btn = card.querySelector('button');
-          if (!btn.disabled) {
-            btn.addEventListener('click', async (e) => {
-              const id = e.currentTarget.getAttribute('data-id');
-              if (!isReserved(id)) {
-                reserveItemId = id;
-                reserveName.value = '';
-                openReserveDialog();
-              } else {
-                const token = getToken(id);
-                if (!token) { alert('Снять бронь можно с того же устройства, где она оформлялась, либо напишите организаторам.'); return; }
-                const btnEl = e.currentTarget;
-                btnEl.disabled = true;
-                const prevHtml = btnEl.innerHTML;
-                btnEl.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
-                const r = await apiCancel(id, token);
-                if (!r || !r.ok) {
-                  alert('Не удалось снять бронь.');
-                  btnEl.disabled = false;
-                  btnEl.innerHTML = prevHtml;
-                  return;
-                }
-                clearToken(id);
-                await renderWishlist();
+          const pill = card.querySelector('.pill');
+          btn.addEventListener('click', async () => {
+            const id = item.id;
+            if (!isReserved(id)) {
+              reserveItemId = id;
+              reserveName.value = '';
+              openReserveDialog();
+            } else {
+              const token = getToken(id);
+              if (!token) { alert('Снять бронь можно с того же устройства, где она оформлялась, либо напишите организаторам.'); return; }
+              btn.disabled = true;
+              const prevHtml = btn.innerHTML;
+              btn.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
+              const r = await apiCancel(id, token);
+              if (!r || !r.ok) {
+                alert('Не удалось снять бронь.');
+                btn.disabled = false;
+                btn.innerHTML = prevHtml;
+                return;
               }
-            });
-          }
+              clearToken(id);
+              await renderWishlist();
+            }
+          });
+          frag.appendChild(card);
+          cardRefs.set(item.id, { card, btn, pill, item });
+        }
+        emptyCard = document.createElement('div');
+        emptyCard.className = 'card';
+        emptyCard.textContent = 'Нет позиций по выбранному фильтру.';
+        emptyCard.hidden = true;
+        frag.appendChild(emptyCard);
+        grid.appendChild(frag);
+      }
 
-          grid.appendChild(card);
+      async function renderWishlist(skipFetch = false) {
+        let overlay;
+        if (!skipFetch) {
+          overlay = document.createElement('div');
+          overlay.className = 'wish-grid__overlay';
+          overlay.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
+          grid.appendChild(overlay);
+          const ok = await fetchWishes();
+          overlay.remove();
+          if (!ok) return;
         }
-        if (!filtered.length) {
-          const empty = document.createElement('div');
-          empty.className = 'card';
-          empty.textContent = 'Нет позиций по выбранному фильтру.';
-          grid.appendChild(empty);
+        let visible = 0;
+        for (const [id, ref] of cardRefs) {
+          const { card, btn, pill } = ref;
+          const reserved = isReserved(id);
+          const owner = reservedName(id);
+          const nameLabel = reserved ? `Забронировано — ${escapeHtml(owner)}` : 'Свободно';
+          const hasToken = !!getToken(id);
+
+          card.classList.toggle('wish-card--reserved', reserved);
+          pill.textContent = nameLabel;
+          pill.className = 'pill badge ' + (reserved ? 'reserved' : 'free');
+          btn.innerHTML = reserved ? (hasToken ? 'Снять бронь' : 'Забронировано') : 'Забронировать';
+          btn.disabled = reserved && !hasToken;
+          btn.setAttribute('aria-pressed', reserved);
+
+          const hidden = onlyFree.checked && reserved;
+          card.hidden = hidden;
+          if (!hidden) visible++;
         }
+        emptyCard.hidden = visible !== 0;
       }
 
       hydrateBasics();
       startCountdown();
+      buildWishlist();
       renderWishlist();
       setInterval(renderWishlist, 45000);
       document.addEventListener('visibilitychange', () => { if (!document.hidden) renderWishlist(); });
@@ -392,7 +428,7 @@
     document.getElementById('copyAddr').addEventListener('click', copyAddress);
       onlyFree.addEventListener('change', () => {
         localStorage.setItem('onlyFree', onlyFree.checked ? '1' : '0');
-        renderWishlist();
+        renderWishlist(true);
       });
       reserveCancel.addEventListener('click', () => closeReserveDialog());
       reserveForm.addEventListener('submit', async (e) => {
