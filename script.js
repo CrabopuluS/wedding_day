@@ -391,7 +391,20 @@
         e.preventDefault();
         const name = reserveName.value.trim();
         if (name.length < 2) { alert('Пожалуйста, укажите имя (не короче 2 символов).'); return; }
-        const r = await apiReserve(reserveItemId, name);
+        const submitBtn = reserveForm.querySelector('button[type="submit"]');
+        const prevHtml = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        reserveCancel.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span>';
+        let r;
+        try {
+          r = await apiReserve(reserveItemId, name);
+        } catch (err) {
+          r = null;
+        }
+        submitBtn.disabled = false;
+        reserveCancel.disabled = false;
+        submitBtn.innerHTML = prevHtml;
         if (!r || !r.ok) {
           alert(r && r.error === 'already_reserved' ? 'Подарок уже забронирован другим гостем' : 'Ошибка бронирования. Попробуйте ещё раз.');
           return;
