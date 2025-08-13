@@ -209,13 +209,15 @@
            возможных подарков, чтобы облегчить вам жизнь. Подарок можно забронировать, чтобы не было проблемы с тем, что
            кто-то решит подарить тоже самое.</p>
          <div id="wishError" class="banner hidden">Сервер недоступен, статусы могут быть неточны</div>
-         <div class="filters">
-           <label class="filter-option">
-             <img src="https://img.icons8.com/ios-glyphs/20/a8773b/filter.png" alt="" aria-hidden="true" />
-             <input type="checkbox" id="onlyFree" />
-             <span>Только свободные</span>
-           </label>
-         </div>
+        <div class="filters">
+          <label class="filter-option">
+            <input type="checkbox" id="onlyFree" />
+            <svg class="filter-icon" viewBox="0 0 24 24" aria-hidden="true" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none">
+              <polygon points="22 3 2 3 10 13 10 19 14 21 14 13 22 3" />
+            </svg>
+            <span>Только свободные</span>
+          </label>
+        </div>
         <div id="wishGrid" class="wish-grid" role="status" aria-live="polite"></div>
       </div>
     </section>
