@@ -278,6 +278,8 @@
             }
             return false;
           }
+
+          return false;
         }
 
       function isReserved(id) { return Boolean(SERVER_MAP[id]); }
