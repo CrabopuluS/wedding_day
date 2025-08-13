@@ -1,5 +1,5 @@
      // === НАСТРОЙКИ ШАБЛОНА ===
-     const WEDDING = {
+     const CONFIG = {
        couple: 'Елизавета и Руслан',
        invite: 'Мы начинаем новую главу нашей истории и будем счастливы, если вы станете её частью.',
        dateISO: '2025-08-30',
@@ -11,7 +11,8 @@
        timeEnd: '16:00',
       venueName: 'Москва-сити, Башня ОКО, 84 этаж 354, ресторан «Birds»',
       address: '1-й Красногвардейский пр-д, 21 стр. 2, 84 этаж',
-      mapsUrl: ''
+      mapsUrl: '',
+      apiUrl: 'https://script.google.com/macros/s/AKfycbyyEfM9vGn4z2Dcpl-DZjyouP57T-ZmwIBMPlTQU-sA_lVWw6hm18hNbPWqeulOpu9_fg/exec'
     };
 
       const WISHLIST = [
@@ -94,27 +95,25 @@
         image: 'image/presents/блендер_погружной.png'
       }
       ];
-      const API_URL = 'https://script.google.com/macros/s/AKfycbyyEfM9vGn4z2Dcpl-DZjyouP57T-ZmwIBMPlTQU-sA_lVWw6hm18hNbPWqeulOpu9_fg/exec';
-
       async function apiList() {
-        const res = await fetch(`${API_URL}?action=list`, { method: 'GET' });
+        const res = await fetch(`${CONFIG.apiUrl}?action=list`, { method: 'GET' });
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
       }
       async function apiReserve(item_id, name) {
         const body = new URLSearchParams({ action: 'reserve', item_id, name });
-        const res = await fetch(API_URL, { method: 'POST', body });
+        const res = await fetch(CONFIG.apiUrl, { method: 'POST', body });
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
       }
       async function apiCancel(item_id, token) {
         const body = new URLSearchParams({ action: 'cancel', item_id, token });
-        const res = await fetch(API_URL, { method: 'POST', body });
+        const res = await fetch(CONFIG.apiUrl, { method: 'POST', body });
         if (!res.ok) throw new Error('Network response was not ok');
         return res.json();
       }
       // === УТИЛИТЫ ДАТ/ФОРМАТОВ ===
-    const dt = new Date(`${WEDDING.dateISO}T${WEDDING.timeStart || '12:00'}:00+03:00`);
+    const dt = new Date(`${CONFIG.dateISO}T${CONFIG.timeStart || '12:00'}:00+03:00`);
 
     function updateMetaUrls() {
       const url = window.location.href.split('#')[0];
@@ -131,45 +130,46 @@
 
     // Отрисовка основных данных
     function hydrateBasics() {
-      document.getElementById('coupleNames').textContent = WEDDING.couple;
-      document.getElementById('footerNames').textContent = WEDDING.couple;
+      document.getElementById('coupleNames').textContent = CONFIG.couple;
+      document.getElementById('footerNames').textContent = CONFIG.couple;
       const inviteEl = document.getElementById('heroInvite');
-      if (inviteEl) inviteEl.textContent = WEDDING.invite;
+      if (inviteEl) inviteEl.textContent = CONFIG.invite;
       document.getElementById('dateText').textContent = dt.toLocaleDateString('ru-RU');
       const dateHero = document.getElementById('dateTextHero');
-      if (dateHero) dateHero.textContent = WEDDING.dateHero || dt.toLocaleDateString('ru-RU');
-      document.getElementById('mainTime').textContent = WEDDING.timeMain;
-      document.getElementById('startTime').textContent = WEDDING.timeStart;
-      document.getElementById('ceremonyTime').textContent = WEDDING.timeCeremony;
+      if (dateHero) dateHero.textContent = CONFIG.dateHero || dt.toLocaleDateString('ru-RU');
+      document.getElementById('mainTime').textContent = CONFIG.timeMain;
+      document.getElementById('startTime').textContent = CONFIG.timeStart;
+      document.getElementById('ceremonyTime').textContent = CONFIG.timeCeremony;
       const tStart = document.getElementById('tStart');
-      if (tStart) tStart.textContent = WEDDING.timeStart;
+      if (tStart) tStart.textContent = CONFIG.timeStart;
       const tCer = document.getElementById('tCeremony');
-      if (tCer) tCer.textContent = WEDDING.timeCeremony;
+      if (tCer) tCer.textContent = CONFIG.timeCeremony;
       const tMain = document.getElementById('tMain');
-      if (tMain) tMain.textContent = WEDDING.timeMain;
+      if (tMain) tMain.textContent = CONFIG.timeMain;
       const tEnd = document.getElementById('tEnd');
-      if (tEnd) tEnd.textContent = WEDDING.timeEnd;
-      document.getElementById('venueName').textContent = WEDDING.venueName;
-      document.getElementById('venueAddr').textContent = WEDDING.address;
+      if (tEnd) tEnd.textContent = CONFIG.timeEnd;
+      document.getElementById('venueName').textContent = CONFIG.venueName;
+      document.getElementById('venueAddr').textContent = CONFIG.address;
       const mapEmbed = document.getElementById('mapEmbed');
       if (mapEmbed) {
-        mapEmbed.innerHTML = `<iframe src="https://maps.google.com/maps?q=${encodeURIComponent(WEDDING.address)}&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
+        mapEmbed.innerHTML = `<iframe src="https://maps.google.com/maps?q=${encodeURIComponent(CONFIG.address)}&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>`;
       }
-      document.title = `Свадьба — ${WEDDING.couple}`;
+      document.title = `Свадьба — ${CONFIG.couple}`;
       updateMetaUrls();
     }
 
+    let countdownTimer;
     function startCountdown() {
       const el = document.getElementById('countdown');
       if (!el) return;
-      const target = new Date(`${WEDDING.dateISO}T${WEDDING.timeMain}:00+03:00`);
+      const target = new Date(`${CONFIG.dateISO}T${CONFIG.timeMain}:00+03:00`);
       const dd = el.querySelectorAll('#cd-days .digit');
       const hh = el.querySelectorAll('#cd-hours .digit');
       const mm = el.querySelectorAll('#cd-minutes .digit');
       const ss = el.querySelectorAll('#cd-seconds .digit');
       function update() {
         const diff = target - new Date();
-        if (diff <= 0) { el.style.display = 'none'; clearInterval(timer); return; }
+        if (diff <= 0) { el.style.display = 'none'; clearInterval(countdownTimer); return; }
         const d = String(Math.floor(diff / 86400000)).padStart(2, '0');
         const h = String(Math.floor(diff % 86400000 / 3600000)).padStart(2, '0');
         const m = String(Math.floor(diff % 3600000 / 60000)).padStart(2, '0');
@@ -180,20 +180,21 @@
         ss[0].textContent = s[0]; ss[1].textContent = s[1];
       }
       update();
-      const timer = setInterval(update, 1000);
+      clearInterval(countdownTimer);
+      countdownTimer = setInterval(update, 1000);
     }
 
     // === КАЛЕНДАРЬ (.ICS) ===
     function downloadICS() {
-      const tz = WEDDING.timezone || 'Europe/Moscow';
+      const tz = CONFIG.timezone || 'Europe/Moscow';
       const compact = (s) => s.replace(/[-:]/g, '');
       const escape = (s) => s.replace(/[\n,;]/g, (ch) => ({ '\n': '\\n', ',': '\\,', ';': '\\;' }[ch]));
-      const start = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeMain)}00`;
-      const end = `${compact(WEDDING.dateISO)}T${compact(WEDDING.timeEnd)}00`;
+      const start = `${compact(CONFIG.dateISO)}T${compact(CONFIG.timeMain)}00`;
+      const end = `${compact(CONFIG.dateISO)}T${compact(CONFIG.timeEnd)}00`;
       const nowUTC = new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d+Z/, 'Z');
-      const summary = escape(`Свадьба: ${WEDDING.couple}`);
-      const location = escape(`${WEDDING.venueName}, ${WEDDING.address}`);
-      const description = escape(WEDDING.invite);
+      const summary = escape(`Свадьба: ${CONFIG.couple}`);
+      const location = escape(`${CONFIG.venueName}, ${CONFIG.address}`);
+      const description = escape(CONFIG.invite);
       const ics = `BEGIN:VCALENDAR\nVERSION:2.0\nPRODID:-//Wedding//Invitation//RU\nX-WR-TIMEZONE:${tz}\nBEGIN:VEVENT\nUID:${Date.now()}@wedding\nDTSTAMP:${nowUTC}\nDTSTART;TZID=${tz}:${start}\nDTEND;TZID=${tz}:${end}\nSUMMARY:${summary}\nLOCATION:${location}\nDESCRIPTION:${description}\nEND:VEVENT\nEND:VCALENDAR`;
       const blob = new Blob([ics], { type: 'text/calendar' });
       const link = document.createElement('a');
@@ -207,11 +208,11 @@
 
     // === КАРТА ===
     function mapUrl() {
-      const encoded = encodeURIComponent(WEDDING.address);
+      const encoded = encodeURIComponent(CONFIG.address);
       const ua = navigator.userAgent;
       if (/iPad|iPhone|Mac/.test(ua)) return `http://maps.apple.com/?q=${encoded}`;
       if (/Android/.test(ua)) return `https://maps.google.com/?q=${encoded}`;
-      return WEDDING.mapsUrl || `https://yandex.ru/maps/?text=${encoded}`;
+      return CONFIG.mapsUrl || `https://yandex.ru/maps/?text=${encoded}`;
     }
 
     function openMap() {
@@ -219,7 +220,7 @@
     }
 
       function copyAddress() {
-        const full = `${WEDDING.venueName}, ${WEDDING.address}`;
+        const full = `${CONFIG.venueName}, ${CONFIG.address}`;
         navigator.clipboard.writeText(full).then(() => {
           const msg = document.getElementById('copyMsg');
           if (msg) {
@@ -292,10 +293,19 @@
       }
 
       async function renderWishlist() {
-        grid.innerHTML = WISHLIST.map(() => '<div class="wish-card skeleton" style="height:calc(128px + var(--gap))"></div>').join('');
+        grid.innerHTML = '';
+        const skeletons = document.createDocumentFragment();
+        WISHLIST.forEach(() => {
+          const skel = document.createElement('div');
+          skel.className = 'wish-card skeleton';
+          skel.style.height = 'calc(128px + var(--gap))';
+          skeletons.appendChild(skel);
+        });
+        grid.appendChild(skeletons);
         await fetchWishes();
         grid.innerHTML = '';
         const filtered = WISHLIST.filter(item => !(onlyFree.checked && isReserved(item.id)));
+        const fragment = document.createDocumentFragment();
         for (const item of filtered) {
           const reserved = isReserved(item.id);
           const owner = reservedName(item.id);
@@ -352,21 +362,27 @@
             });
           }
 
-          grid.appendChild(card);
+          fragment.appendChild(card);
         }
         if (!filtered.length) {
           const empty = document.createElement('div');
           empty.className = 'card';
           empty.textContent = 'Нет позиций по выбранному фильтру.';
-          grid.appendChild(empty);
+          fragment.appendChild(empty);
         }
+        grid.appendChild(fragment);
       }
 
       hydrateBasics();
       startCountdown();
       renderWishlist();
       setInterval(renderWishlist, 45000);
-      document.addEventListener('visibilitychange', () => { if (!document.hidden) renderWishlist(); });
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) {
+          startCountdown();
+          renderWishlist();
+        }
+      });
 
       const timelineEl = document.getElementById('timeline');
     if (timelineEl) {
