@@ -57,7 +57,7 @@
   --font-xxl: var(--fs-40);
   --font-display: var(--fs-56);
 
-  --heading-size: var(--fs-56);
+  --heading-size: var(--fs-40);
 
   --radius: var(--radius-lg);
   --gap: var(--space-3);
@@ -74,6 +74,12 @@
   --secondary: var(--accent-2);
   --secondary-hover: #c38c60;
   --white: var(--surface);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --heading-size: var(--fs-56);
+  }
 }
 * {
   box-sizing: border-box;
@@ -406,11 +412,22 @@ header.scrolled {
 }
 .hero > * {
   position: relative;
+  z-index: 2;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
+  z-index: 1;
+  pointer-events: none;
 }
 
 .hero-photo {
   width: clamp(300px, 90vw, 570px);
   height: auto;
+  z-index: 0;
 }
 
 #calendar {
