@@ -57,7 +57,7 @@
   --font-xxl: var(--fs-40);
   --font-display: var(--fs-56);
 
-  --heading-size: var(--fs-40);
+  --heading-size: var(--fs-56);
 
   --radius: var(--radius-lg);
   --gap: var(--space-3);
@@ -74,12 +74,6 @@
   --secondary: var(--accent-2);
   --secondary-hover: #c38c60;
   --white: var(--surface);
-}
-
-@media (min-width: 768px) {
-  :root {
-    --heading-size: var(--fs-56);
-  }
 }
 * {
   box-sizing: border-box;
@@ -147,11 +141,6 @@ h4 {
 .container {
   max-width: 1200px;
   margin: 0 auto;
-}
-.section-divider {
-  display: block;
-  width: 100%;
-  margin: 0;
 }
 .container p {
   max-width: 65ch;
@@ -412,27 +401,11 @@ header.scrolled {
 }
 .hero > * {
   position: relative;
-  z-index: 2;
-}
-
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.2));
-  z-index: 1;
-  pointer-events: none;
 }
 
 .hero-photo {
   width: clamp(300px, 90vw, 570px);
   height: auto;
-  z-index: 0;
-}
-
-#calendar {
-  min-height: auto;
-  padding: clamp(32px, 4vw, 48px) var(--space-3);
 }
 
 .calendar-table {
@@ -673,36 +646,17 @@ img {
   margin-bottom: calc(var(--gap) / 1.5);
 }
 .filter-option {
-  position: relative;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-1) var(--space-2);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-md);
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
   background: var(--surface);
-  cursor: pointer;
-  transition: background-color var(--dur-mid) var(--easing), border-color var(--dur-mid) var(--easing), color var(--dur-mid) var(--easing);
 }
-.filter-option:hover {
-  border-color: var(--accent-1);
-}
-.filter-option input {
-  position: absolute;
-  opacity: 0;
-  pointer-events: none;
-}
-.filter-option .filter-icon {
+.filter-option img {
   width: 20px;
   height: 20px;
-}
-.filter-option:has(input:checked) {
-  background: var(--accent-1);
-  border-color: var(--accent-1);
-  color: var(--surface);
-}
-.filter-option:has(input:checked) .filter-icon {
-  stroke: currentColor;
 }
 .section-note {
   margin-bottom: var(--gap);
@@ -834,12 +788,6 @@ dialog menu {
 .copy-msg {
   font-size: var(--fs-14);
   color: var(--text-secondary);
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
-
-.copy-msg.show {
-  opacity: 1;
 }
 .map-widget {
   margin-top: var(--gap);
@@ -856,7 +804,7 @@ dialog menu {
   margin-top: var(--gap);
 }
 .countdown-label {
-  margin-top: calc(var(--gap) * 2);
+  margin-top: calc(var(--gap) * 2;
   margin-bottom: var(--gap);
 }
 .countdown {
