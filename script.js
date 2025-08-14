@@ -10,13 +10,10 @@
        timezone: 'Europe/Moscow',
        timeEnd: '16:00',
       venueName: 'Москва-сити, Башня ОКО, 84 этаж 354, ресторан «Birds»',
-     address: '1-й Красногвардейский пр-д, 21 стр. 2, 84 этаж',
-     mapsUrl: '',
-     apiUrl: 'https://script.google.com/macros/s/AKfycbyyEfM9vGn4z2Dcpl-DZjyouP57T-ZmwIBMPlTQU-sA_lVWw6hm18hNbPWqeulOpu9_fg/exec'
+      address: '1-й Красногвардейский пр-д, 21 стр. 2, 84 этаж',
+      mapsUrl: '',
+      apiUrl: 'https://script.google.com/macros/s/AKfycbyyEfM9vGn4z2Dcpl-DZjyouP57T-ZmwIBMPlTQU-sA_lVWw6hm18hNbPWqeulOpu9_fg/exec'
     };
-
-    // Генерируем ссылку на карту на основе адреса
-    CONFIG.mapsUrl = `https://yandex.ru/maps/?text=${encodeURIComponent(CONFIG.address)}`;
 
       const WISHLIST = [
       {
@@ -54,6 +51,12 @@
         title: 'Колонка Алиса Midi',
         link: 'https://www.dns-shop.ru/product/e498e4397a02ed20/umnaa-kolonka-andeks-stancia-midi-cernyj/',
         image: 'image/presents/колонка_алиса.png'
+      },
+      {
+        id: 'bosch_meat_grinder',
+        title: 'Мясорубка Bosch',
+        link: 'https://www.dns-shop.ru/product/f93d6a66afe73361/masorubka-elektriceskaa-bosch-mfw-68640-cernyj/',
+        image: 'image/presents/мясорубка.png'
       },
       {
         id: 'bath_towels',
@@ -222,11 +225,7 @@
           const msg = document.getElementById('copyMsg');
           if (msg) {
             msg.textContent = 'Адрес скопирован';
-            msg.classList.add('show');
-            setTimeout(() => {
-              msg.classList.remove('show');
-              msg.textContent = '';
-            }, 2000);
+            setTimeout(() => { msg.textContent = ''; }, 3000);
           }
         }).catch(() => {
           alert('Не удалось скопировать адрес');
@@ -251,8 +250,7 @@
       function closeReserveDialog(){ supportsDialog ? reserveDialog.close() : reserveDialog.classList.add('hidden'); }
       if(!supportsDialog){ reserveDialog.classList.add('modal-fallback','hidden'); document.addEventListener('keydown',e=>{ if(e.key==='Escape' && !reserveDialog.classList.contains('hidden')) closeReserveDialog(); }); }
 
-      // По умолчанию показываем только свободные позиции
-      onlyFree.checked = localStorage.getItem('onlyFree') !== '0';
+      onlyFree.checked = localStorage.getItem('onlyFree') === '1';
 
       // Локально храним только токен отмены; активные брони берём с сервера
       function getToken(id){ return localStorage.getItem('wish_token_'+id) || ''; }
