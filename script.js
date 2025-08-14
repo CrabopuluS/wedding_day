@@ -53,12 +53,6 @@
         image: 'image/presents/колонка_алиса.png'
       },
       {
-        id: 'bosch_meat_grinder',
-        title: 'Мясорубка Bosch',
-        link: 'https://www.dns-shop.ru/product/f93d6a66afe73361/masorubka-elektriceskaa-bosch-mfw-68640-cernyj/',
-        image: 'image/presents/мясорубка.png'
-      },
-      {
         id: 'bath_towels',
         title: 'Полотенца банные',
         link: 'https://www.wildberries.ru/catalog/211848970/detail.aspx?targetUrl=SG',
